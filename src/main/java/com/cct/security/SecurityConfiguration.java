@@ -1,0 +1,57 @@
+package com.cct.security;
+
+import com.cct.security.filter.JWTAuthenticationFilter;
+import com.cct.security.filter.JWTLoginFilter;
+import com.cct.security.service.TokenAuthenticationService;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.http.HttpMethod.POST;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
+    private final TokenAuthenticationService tokenAuthenticationService;
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfiguration(
+            JWTAuthenticationFilter jwtAuthenticationFilter,
+            TokenAuthenticationService tokenAuthenticationService,
+            UserDetailsService userDetailsService) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.tokenAuthenticationService = tokenAuthenticationService;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable();
+
+        http
+                .authorizeRequests()
+                .antMatchers(POST, "/api/login", "/api/user").permitAll()
+                .anyRequest().fullyAuthenticated();
+
+        http
+                .addFilterBefore(new JWTLoginFilter(tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .exceptionHandling()
+                .authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> System.out.println("No auth"));
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
+
+}
