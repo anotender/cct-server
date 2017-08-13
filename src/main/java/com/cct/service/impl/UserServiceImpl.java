@@ -1,5 +1,6 @@
 package com.cct.service.impl;
 
+import com.cct.exception.BadRequestException;
 import com.cct.model.User;
 import com.cct.model.dto.UserDTO;
 import com.cct.repository.UserRepository;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import static com.cct.exception.ErrorInfo.USER_NOT_FOUND;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,7 +38,7 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findOneById(id)
                 .map(modelMapper::convertToDTO)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
     }
 
     @Override

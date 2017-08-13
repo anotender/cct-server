@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.cct.exception.ErrorInfo.UNAUTHORIZED;
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
@@ -46,7 +47,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .exceptionHandling()
-                .authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> System.out.println("No auth"));
+                .authenticationEntryPoint((req, resp, e) -> {
+                    resp.setStatus(UNAUTHORIZED.getStatus().value());
+                    resp.getWriter().print(UNAUTHORIZED.getMessage());
+                });
     }
 
     @Override
