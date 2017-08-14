@@ -1,4 +1,4 @@
-package com.cct.security.model;
+package com.cct.configuration.security.model;
 
 import com.cct.model.User;
 import org.springframework.security.core.authority.AuthorityUtils;

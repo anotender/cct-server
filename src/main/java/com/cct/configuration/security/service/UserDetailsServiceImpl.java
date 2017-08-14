@@ -1,8 +1,8 @@
-package com.cct.security.service;
+package com.cct.configuration.security.service;
 
+import com.cct.configuration.security.model.SecurityUser;
 import com.cct.exception.BadRequestException;
-import com.cct.repository.UserRepository;
-import com.cct.security.model.SecurityUser;
+import com.cct.repository.api.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

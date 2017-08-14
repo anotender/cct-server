@@ -1,7 +1,7 @@
-package com.cct.security.filter;
+package com.cct.configuration.security.filter;
 
-import com.cct.security.model.AccountCredentials;
-import com.cct.security.service.TokenAuthenticationService;
+import com.cct.configuration.security.model.AccountCredentials;
+import com.cct.configuration.security.service.TokenAuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

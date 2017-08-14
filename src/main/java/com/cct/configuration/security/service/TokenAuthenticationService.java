@@ -1,4 +1,4 @@
-package com.cct.security.service;
+package com.cct.configuration.security.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

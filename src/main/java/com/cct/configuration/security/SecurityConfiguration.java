@@ -1,8 +1,8 @@
-package com.cct.security;
+package com.cct.configuration.security;
 
-import com.cct.security.filter.JWTAuthenticationFilter;
-import com.cct.security.filter.JWTLoginFilter;
-import com.cct.security.service.TokenAuthenticationService;
+import com.cct.configuration.security.filter.JWTAuthenticationFilter;
+import com.cct.configuration.security.filter.JWTLoginFilter;
+import com.cct.configuration.security.service.TokenAuthenticationService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +25,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public SecurityConfiguration(
             JWTAuthenticationFilter jwtAuthenticationFilter,
             TokenAuthenticationService tokenAuthenticationService,
-            UserDetailsService userDetailsService) {
+            UserDetailsService userDetailsService
+    ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.tokenAuthenticationService = tokenAuthenticationService;
         this.userDetailsService = userDetailsService;

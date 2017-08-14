@@ -1,6 +1,8 @@
 package com.cct.util;
 
+import com.cct.model.Make;
 import com.cct.model.User;
+import com.cct.model.dto.MakeDTO;
 import com.cct.model.dto.UserDTO;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,26 @@ public class ModelMapper {
         userDTO.setEmail(user.getEmail());
 
         return userDTO;
+    }
+
+    public Make convertToEntity(MakeDTO makeDTO) {
+        Make make = new Make();
+
+        make.setId(makeDTO.getId());
+        make.setName(makeDTO.getName());
+        make.setLogoUrl(makeDTO.getLogoUrl());
+
+        return make;
+    }
+
+    public MakeDTO convertToDTO(Make make) {
+        MakeDTO makeDTO = new MakeDTO();
+
+        makeDTO.setId(make.getId());
+        makeDTO.setName(make.getName());
+        makeDTO.setLogoUrl(make.getLogoUrl());
+
+        return makeDTO;
     }
 
 }

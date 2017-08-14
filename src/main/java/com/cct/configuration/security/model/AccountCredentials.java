@@ -1,4 +1,4 @@
-package com.cct.security.model;
+package com.cct.configuration.security.model;
 
 import lombok.Data;
 

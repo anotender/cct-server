@@ -3,7 +3,7 @@ package com.cct.service.impl;
 import com.cct.exception.BadRequestException;
 import com.cct.model.User;
 import com.cct.model.dto.UserDTO;
-import com.cct.repository.UserRepository;
+import com.cct.repository.api.UserRepository;
 import com.cct.service.api.UserService;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.cct.security.filter;
+package com.cct.configuration.security.filter;
 
-import com.cct.security.service.TokenAuthenticationService;
+import com.cct.configuration.security.service.TokenAuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
