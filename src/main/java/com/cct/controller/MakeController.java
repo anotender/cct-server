@@ -1,7 +1,9 @@
 package com.cct.controller;
 
 import com.cct.model.dto.MakeDTO;
+import com.cct.model.dto.ModelDTO;
 import com.cct.service.api.MakeService;
+import com.cct.service.api.ModelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +19,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class MakeController {
 
     private final MakeService makeService;
+    private final ModelService modelService;
 
-    public MakeController(MakeService makeService) {
+    public MakeController(MakeService makeService, ModelService modelService) {
         this.makeService = makeService;
+        this.modelService = modelService;
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
@@ -30,5 +34,10 @@ public class MakeController {
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<MakeDTO>> getMakes() {
         return ResponseEntity.ok(makeService.getMakes());
+    }
+
+    @GetMapping(value = "/{id}/model", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<ModelDTO>> getMakes(@PathVariable("id") String id) {
+        return ResponseEntity.ok(modelService.getModelsByMakeId(id));
     }
 }
