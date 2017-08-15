@@ -33,7 +33,6 @@ public class ModelMapper {
 
         make.setId(makeDTO.getId());
         make.setName(makeDTO.getName());
-        make.setLogoUrl(makeDTO.getLogoUrl());
 
         return make;
     }
@@ -43,7 +42,6 @@ public class ModelMapper {
 
         makeDTO.setId(make.getId());
         makeDTO.setName(make.getName());
-        makeDTO.setLogoUrl(make.getLogoUrl());
 
         return makeDTO;
     }

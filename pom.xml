@@ -23,7 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <jjwt.version>0.7.0</jjwt.version>
-        <jsoup.version>1.10.3</jsoup.version>
+        <json.version>20170516</json.version>
     </properties>
 
     <dependencies>
@@ -59,9 +59,9 @@
             <version>${jjwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
         </dependency>
 
         <!--TEST-->

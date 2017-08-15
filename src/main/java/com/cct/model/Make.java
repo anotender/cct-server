@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class Make {
     private String id;
     private String name;
-    private String logoUrl;
 }
