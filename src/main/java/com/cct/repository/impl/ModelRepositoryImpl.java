@@ -57,25 +57,27 @@ public class ModelRepositoryImpl implements ModelRepository {
         String name = o.getString("model_name");
         String version = o.getString("model_trim");
         int year = o.getInt("model_year");
-
-        double highwayFuelConsumption = 0;
-        if (o.has("model_lkm_hwy") && !o.isNull("model_lkm_hwy")) {
-            highwayFuelConsumption = o.getDouble("model_lkm_hwy");
-        }
-
-        double cityFuelConsumption = 0;
-        if (o.has("model_lkm_city") && !o.isNull("model_lkm_city")) {
-            cityFuelConsumption = o.getDouble("model_lkm_city");
-        }
-
-        double mixedFuelConsumption = 0;
-        if (o.has("model_lkm_mixed") && !o.isNull("model_lkm_mixed")) {
-            mixedFuelConsumption = o.getDouble("model_lkm_mixed");
-        }
+        double highwayFuelConsumption = computeFuelConsumption(o, "hwy");
+        double cityFuelConsumption = computeFuelConsumption(o, "city");
+        double mixedFuelConsumption = computeFuelConsumption(o, "mixed");
 
         return new Model(
                 modelId, makeId, name, version, year,
                 highwayFuelConsumption, cityFuelConsumption, mixedFuelConsumption
         );
+    }
+
+    private double computeFuelConsumption(JSONObject o, String type) {
+        String lkm = "model_lkm_" + type;
+        String mpg = "model_mpg_" + type;
+
+        if (o.has(lkm) && o.has(mpg)) {
+            return o.getDouble(lkm) > o.getDouble(mpg) ? o.getDouble(mpg) : o.getDouble(lkm);
+        } else if (o.has(lkm)) {
+            return o.getDouble(lkm);
+        } else if (o.has(mpg)) {
+            return 235 / o.getDouble(mpg);
+        }
+        return 0;
     }
 }
