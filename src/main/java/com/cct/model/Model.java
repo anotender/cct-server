@@ -1,19 +1,36 @@
 package com.cct.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
+
+@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"make", "versions", "cars"})
 public class Model {
+    @Id
     private String id;
-    private String makeId;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(nullable = false)
+    private Make make;
+
+    @Column(nullable = false, unique = true)
     private String name;
-    private String version;
-    private int year;
-    private double highwayFuelConsumption;
-    private double cityFuelConsumption;
-    private double mixedFuelConsumption;
+
+    @Column(nullable = false)
+    private String body;
+
+    @OneToMany(fetch = LAZY, mappedBy = "model")
+    private Set<Version> versions = new HashSet<>();
+
+    @OneToMany(fetch = LAZY, mappedBy = "model")
+    private Set<Car> cars = new HashSet<>();
 }

@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(POST, "/api/login", "/api/user").permitAll()
+                .antMatchers(POST, "/api/login", "/api/users").permitAll()
                 .anyRequest().fullyAuthenticated();
 
         http

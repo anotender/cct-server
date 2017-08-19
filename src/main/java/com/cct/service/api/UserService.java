@@ -5,7 +5,7 @@ import com.cct.model.dto.UserDTO;
 import java.util.Collection;
 
 public interface UserService {
-    UserDTO getUser(String id);
+    UserDTO getUser(Long id);
 
     Collection<UserDTO> getUsers();
 

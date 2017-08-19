@@ -2,28 +2,28 @@ package com.cct.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Data
-@Document(collection = "users")
-@TypeAlias("user")
+@Entity
+@Table(name = "app_user")
 public class User {
     @Id
-    @Field("id")
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Email
-    @Indexed(unique = true)
-    @Field("email")
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @NotNull
-    @Field("password")
+    @Column(nullable = false)
     private String password;
+
+    @OneToMany(fetch = LAZY, mappedBy = "user")
+    private Set<Car> cars = new HashSet<>();
 }

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUser(String id) {
+    public UserDTO getUser(Long id) {
         return userRepository
                 .findOneById(id)
                 .map(modelMapper::convertToDTO)

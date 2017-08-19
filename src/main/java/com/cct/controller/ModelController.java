@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api/model")
+@RequestMapping("/api/models")
 public class ModelController {
 
     private final ModelService modelService;
