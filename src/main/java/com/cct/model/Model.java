@@ -22,7 +22,7 @@ public class Model {
     @JoinColumn(nullable = false)
     private Make make;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)

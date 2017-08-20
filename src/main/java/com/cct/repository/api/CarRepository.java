@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    Collection<Car> findByUser(Long userId);
+    Collection<Car> findByUserId(Long userId);
 
     Optional<Car> findOneById(Long id);
 }

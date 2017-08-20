@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Collection<CarDTO> getCarsForUser(Long userId) {
         return carRepository
-                .findByUser(userId)
+                .findByUserId(userId)
                 .stream()
                 .map(modelMapper::convertToDTO)
                 .collect(Collectors.toSet());
