@@ -12,6 +12,7 @@ public enum ErrorInfo {
     USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND),
     MAKE_NOT_FOUND("Make not found", HttpStatus.NOT_FOUND),
     MODEL_NOT_FOUND("Model not found", HttpStatus.NOT_FOUND),
+    VERSION_NOT_FOUND("Version not found", HttpStatus.NOT_FOUND),
     CAR_NOT_FOUND("Car not found", HttpStatus.NOT_FOUND),
     UNAUTHORIZED("Unauthorized", HttpStatus.UNAUTHORIZED),
     UNKNOWN("Unknown error", HttpStatus.BAD_REQUEST);

@@ -45,13 +45,13 @@ public class ModelMapper {
 
         car.setId(carDTO.getId());
 
+        Version version = new Version();
+        version.setId(carDTO.getVersionId());
+        car.setVersion(version);
+
         User user = new User();
         user.setId(carDTO.getUserId());
         car.setUser(user);
-
-        Model model = new Model();
-        model.setId(carDTO.getModelId());
-        car.setModel(model);
 
         return car;
     }
@@ -60,8 +60,8 @@ public class ModelMapper {
         CarDTO carDTO = new CarDTO();
 
         carDTO.setId(car.getId());
-        carDTO.setModelId(car.getModel().getId());
         carDTO.setUserId(car.getUser().getId());
+        carDTO.setVersionId(car.getVersion().getId());
 
         return carDTO;
     }
@@ -154,8 +154,7 @@ public class ModelMapper {
         model.setId(versionDTO.getModelId());
         version.setModel(model);
 
-        version.setStartYear(versionDTO.getStartYear());
-        version.setEndYear(versionDTO.getEndYear());
+        version.setYears(versionDTO.getYears());
         version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
         version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
         version.setMixedFuelConsumption(versionDTO.getMixedFuelConsumption());
@@ -169,8 +168,7 @@ public class ModelMapper {
         versionDTO.setId(version.getId());
         versionDTO.setName(version.getName());
         versionDTO.setModelId(version.getModel().getId());
-        versionDTO.setStartYear(version.getStartYear());
-        versionDTO.setEndYear(version.getEndYear());
+        versionDTO.setYears(version.getYears());
         versionDTO.setCityFuelConsumption(version.getCityFuelConsumption());
         versionDTO.setHighwayFuelConsumption(version.getHighwayFuelConsumption());
         versionDTO.setMixedFuelConsumption(version.getMixedFuelConsumption());

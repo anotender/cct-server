@@ -5,5 +5,7 @@ import com.cct.model.Version;
 import java.util.Collection;
 
 public interface VersionWebRepository {
-    Collection<Version> findByModelId(String modelId);
+    void fetchData(Version v);
+
+    Collection<Version> findByMakeIdAndModelId(String makeId, String modelId);
 }

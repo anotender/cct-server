@@ -11,8 +11,7 @@ public class VersionDTO {
     private String id;
     private String modelId;
     private String name;
-    private Integer startYear;
-    private Integer endYear;
+    private String years;
     private String fuel;
     private Double cityFuelConsumption;
     private Double highwayFuelConsumption;

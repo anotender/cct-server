@@ -17,7 +17,7 @@ public class Car {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)
-    private Model model;
+    private Version version;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)
