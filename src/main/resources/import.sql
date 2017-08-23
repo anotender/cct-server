@@ -530,7 +530,7 @@ INSERT INTO model(id, body, name, make_id) VALUES ('orlando', 'wagons', 'Orlando
 INSERT INTO model(id, body, name, make_id) VALUES ('traverse', 'suvs', 'Traverse', 'chevrolet');
 INSERT INTO model(id, body, name, make_id) VALUES ('equinox', 'suvs', 'Equinox', 'chevrolet');
 INSERT INTO model(id, body, name, make_id) VALUES ('camaro-convertible', 'convertibles', 'Camaro Convertible', 'chevrolet');
-INSERT INTO model(id, body, name, make_id) VALUES ('volt', '', 'Volt', 'chevrolet');
+INSERT INTO model(id, body, name, make_id) VALUES ('volt', 'unknown', 'Volt', 'chevrolet');
 INSERT INTO model(id, body, name, make_id) VALUES ('cruze-1', 'sedans', 'Cruze', 'chevrolet');
 INSERT INTO model(id, body, name, make_id) VALUES ('camaro', 'coupes', 'Camaro', 'chevrolet');
 INSERT INTO model(id, body, name, make_id) VALUES ('malibu', 'sedans', 'Malibu', 'chevrolet');
@@ -1062,12 +1062,12 @@ INSERT INTO model(id, body, name, make_id) VALUES ('windstar', 'vans', 'Windstar
 INSERT INTO model(id, body, name, make_id) VALUES ('zodiac', 'sedans', 'Zodiac', 'ford');
 
 -- FSO
-INSERT INTO model(id, body, name, make_id) VALUES ('125', '', '125', 'fso');
-INSERT INTO model(id, body, name, make_id) VALUES ('polonez', '', 'Polonez', 'fso');
-INSERT INTO model(id, body, name, make_id) VALUES ('polonez-atu', '', 'Polonez Atu', 'fso');
-INSERT INTO model(id, body, name, make_id) VALUES ('polonez-caro', '', 'Polonez Caro', 'fso');
-INSERT INTO model(id, body, name, make_id) VALUES ('polonez-kombi', '', 'Polonez Kombi', 'fso');
-INSERT INTO model(id, body, name, make_id) VALUES ('prima', '', 'Prima', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('125', 'unknown', '125', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('polonez', 'unknown', 'Polonez', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('polonez-atu', 'unknown', 'Polonez Atu', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('polonez-caro', 'unknown', 'Polonez Caro', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('polonez-kombi', 'unknown', 'Polonez Kombi', 'fso');
+INSERT INTO model(id, body, name, make_id) VALUES ('prima', 'unknown', 'Prima', 'fso');
 
 -- GEELY
 INSERT INTO model(id, body, name, make_id) VALUES ('lc', 'hatchbacks', 'LC', 'geely');
@@ -1871,17 +1871,17 @@ INSERT INTO model(id, body, name, make_id) VALUES ('terrano-3-doors', 'suvs', 'T
 INSERT INTO model(id, body, name, make_id) VALUES ('titan-king-cab', 'trucks', 'Titan King Cab', 'nissan');
 
 -- OLDSMOBILE
-INSERT INTO model(id, body, name, make_id) VALUES ('alero-sedan', '', 'Alero sedan', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('alero-coupe', '', 'Alero coupe', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('silhouette', '', 'Silhouette', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('bravada', '', 'Bravada', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('curved-dash', '', 'Curved Dash', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('88', '', '88', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('cutlass', '', 'Cutlass', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('442-convertible', '', '442 Convertible', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('toronado', '', 'Toronado', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('aurora', '', 'Aurora', 'oldsmobile');
-INSERT INTO model(id, body, name, make_id) VALUES ('intrigue', '', 'Intrigue', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('alero-sedan', 'unknown', 'Alero sedan', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('alero-coupe', 'unknown', 'Alero coupe', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('silhouette', 'unknown', 'Silhouette', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('bravada', 'unknown', 'Bravada', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('curved-dash', 'unknown', 'Curved Dash', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('88', 'unknown', '88', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('cutlass', 'unknown', 'Cutlass', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('442-convertible', 'unknown', '442 Convertible', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('toronado', 'unknown', 'Toronado', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('aurora', 'unknown', 'Aurora', 'oldsmobile');
+INSERT INTO model(id, body, name, make_id) VALUES ('intrigue', 'unknown', 'Intrigue', 'oldsmobile');
 
 -- OPEL
 INSERT INTO model(id, body, name, make_id) VALUES ('astra-gtc', 'hatchbacks', 'Astra GTC', 'opel');
@@ -1939,7 +1939,7 @@ INSERT INTO model(id, body, name, make_id) VALUES ('vectra-opc', 'sedans', 'Vect
 INSERT INTO model(id, body, name, make_id) VALUES ('vectra-sedan-1', 'sedans', 'Vectra Sedan', 'opel');
 
 -- PAGANI
-INSERT INTO model(id, body, name, make_id) VALUES ('huayra', '', 'Huayra', 'pagani');
+INSERT INTO model(id, body, name, make_id) VALUES ('huayra', 'unknown', 'Huayra', 'pagani');
 INSERT INTO model(id, body, name, make_id) VALUES ('zonda-f', 'coupes', 'Zonda F', 'pagani');
 INSERT INTO model(id, body, name, make_id) VALUES ('zonda-f-roadster', 'convertibles', 'Zonda F Roadster', 'pagani');
 INSERT INTO model(id, body, name, make_id) VALUES ('zonda-s', 'coupes', 'Zonda S', 'pagani');
@@ -1948,9 +1948,9 @@ INSERT INTO model(id, body, name, make_id) VALUES ('zonda-cinque-roadster', 'con
 INSERT INTO model(id, body, name, make_id) VALUES ('zonda-cinque', 'coupes', 'Zonda Cinque', 'pagani');
 
 -- PANOZ
-INSERT INTO model(id, body, name, make_id) VALUES ('esperante', '', 'Esperante', 'panoz');
-INSERT INTO model(id, body, name, make_id) VALUES ('esperante-gt', '', 'Esperante GT', 'panoz');
-INSERT INTO model(id, body, name, make_id) VALUES ('esperante-gtlm', '', 'Esperante GTLM', 'panoz');
+INSERT INTO model(id, body, name, make_id) VALUES ('esperante', 'unknown', 'Esperante', 'panoz');
+INSERT INTO model(id, body, name, make_id) VALUES ('esperante-gt', 'unknown', 'Esperante GT', 'panoz');
+INSERT INTO model(id, body, name, make_id) VALUES ('esperante-gtlm', 'unknown', 'Esperante GTLM', 'panoz');
 
 -- PERODUA
 INSERT INTO model(id, body, name, make_id) VALUES ('alza', 'vans', 'Alza', 'perodua');
@@ -2023,24 +2023,24 @@ INSERT INTO model(id, body, name, make_id) VALUES ('807', 'vans', '807', 'peugeo
 INSERT INTO model(id, body, name, make_id) VALUES ('partner-combi', 'vans', 'Partner Combi', 'peugeot');
 
 -- PONTIAC
-INSERT INTO model(id, body, name, make_id) VALUES ('g6-coupe', '', 'G6 Coupe', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('g6-convertible', '', 'G6 Convertible', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('gto', '', 'GTO', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('solstice', '', 'Solstice', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('torrent', '', 'Torrent', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('vibe', '', 'Vibe', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('grand-prix', '', 'Grand Prix', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('aztek', '', 'Aztek', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('sunfire', '', 'Sunfire', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('montana', '', 'Montana', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('g6', '', 'G6', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('boneville', '', 'Boneville', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('g5', '', 'G5', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('firebird', '', 'Firebird', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('fiero', '', 'Fiero', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('trans-sport', '', 'Trans Sport', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('grand-am', '', 'Grand Am', 'pontiac');
-INSERT INTO model(id, body, name, make_id) VALUES ('g8', '', 'G8', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('g6-coupe', 'unknown', 'G6 Coupe', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('g6-convertible', 'unknown', 'G6 Convertible', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('gto', 'unknown', 'GTO', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('solstice', 'unknown', 'Solstice', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('torrent', 'unknown', 'Torrent', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('vibe', 'unknown', 'Vibe', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('grand-prix', 'unknown', 'Grand Prix', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('aztek', 'unknown', 'Aztek', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('sunfire', 'unknown', 'Sunfire', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('montana', 'unknown', 'Montana', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('g6', 'unknown', 'G6', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('boneville', 'unknown', 'Boneville', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('g5', 'unknown', 'G5', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('firebird', 'unknown', 'Firebird', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('fiero', 'unknown', 'Fiero', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('trans-sport', 'unknown', 'Trans Sport', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('grand-am', 'unknown', 'Grand Am', 'pontiac');
+INSERT INTO model(id, body, name, make_id) VALUES ('g8', 'unknown', 'G8', 'pontiac');
 INSERT INTO model(id, body, name, make_id) VALUES ('g3', 'hatchbacks', 'G3', 'pontiac');
 
 -- PORSCHE
@@ -2242,9 +2242,9 @@ INSERT INTO model(id, body, name, make_id) VALUES ('s7', 'coupes', 'S7', 'saleen
 INSERT INTO model(id, body, name, make_id) VALUES ('s7tt', 'coupes', 'S7TT', 'saleen');
 
 -- SAMSUNG
-INSERT INTO model(id, body, name, make_id) VALUES ('sm-3', '', 'SM 3', 'samsung');
-INSERT INTO model(id, body, name, make_id) VALUES ('sm-5', '', 'SM 5', 'samsung');
-INSERT INTO model(id, body, name, make_id) VALUES ('sm-7', '', 'SM 7', 'samsung');
+INSERT INTO model(id, body, name, make_id) VALUES ('sm-3', 'unknown', 'SM 3', 'samsung');
+INSERT INTO model(id, body, name, make_id) VALUES ('sm-5', 'unknown', 'SM 5', 'samsung');
+INSERT INTO model(id, body, name, make_id) VALUES ('sm-7', 'unknown', 'SM 7', 'samsung');
 
 -- SANTANA
 INSERT INTO model(id, body, name, make_id) VALUES ('ps-10-pickup', 'trucks', 'PS 10 Pickup', 'santana');
@@ -2253,14 +2253,14 @@ INSERT INTO model(id, body, name, make_id) VALUES ('ps-10-plus', 'suvs', 'PS 10 
 INSERT INTO model(id, body, name, make_id) VALUES ('300-350', 'suvs', '300 - 350', 'santana');
 
 -- SATURN
-INSERT INTO model(id, body, name, make_id) VALUES ('ion-sedan', '', 'Ion Sedan', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('ion-quad-coupe', '', 'Ion Quad Coupe', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('relay', '', 'Relay', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('vue', '', 'Vue', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('sky', '', 'Sky', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('astra-1', '', 'Astra', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('aura', '', 'Aura', 'saturn');
-INSERT INTO model(id, body, name, make_id) VALUES ('outlook', '', 'Outlook', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('ion-sedan', 'unknown', 'Ion Sedan', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('ion-quad-coupe', 'unknown', 'Ion Quad Coupe', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('relay', 'unknown', 'Relay', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('vue', 'unknown', 'Vue', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('sky', 'unknown', 'Sky', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('astra-1', 'unknown', 'Astra', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('aura', 'unknown', 'Aura', 'saturn');
+INSERT INTO model(id, body, name, make_id) VALUES ('outlook', 'unknown', 'Outlook', 'saturn');
 
 -- SCION
 INSERT INTO model(id, body, name, make_id) VALUES ('fr-s', 'coupes', 'FR-S', 'scion');
@@ -2307,7 +2307,7 @@ INSERT INTO model(id, body, name, make_id) VALUES ('leon-cupra-r', 'hatchbacks',
 INSERT INTO model(id, body, name, make_id) VALUES ('rapid-spaceback', 'wagons', 'Rapid Spaceback', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('kodiaq', 'suvs', 'Kodiaq', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('rapid', 'sedans', 'Rapid', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('octavia-combi-4x4', '', 'Octavia Combi 4x4', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('octavia-combi-4x4', 'unknown', 'Octavia Combi 4x4', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('octavia-combi', 'wagons', 'Octavia Combi', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('octavia-combi-rs', 'wagons', 'Octavia Combi RS', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('citigo', 'hatchbacks', 'Citigo', 'skoda');
@@ -2318,16 +2318,16 @@ INSERT INTO model(id, body, name, make_id) VALUES ('superb-combi', 'wagons', 'Su
 INSERT INTO model(id, body, name, make_id) VALUES ('fabia', 'hatchbacks', 'Fabia', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('fabia-combi', 'hatchbacks', 'Fabia Combi', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('yeti', 'suvs', 'Yeti', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('octavia-scout', '', 'Octavia Scout', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('octavia-scout', 'unknown', 'Octavia Scout', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('fabia-rs', 'hatchbacks', 'Fabia RS', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('fabia-sedan', '', 'Fabia Sedan', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('felicia', '', 'Felicia', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('fabia-sedan', 'unknown', 'Fabia Sedan', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('felicia', 'unknown', 'Felicia', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('roomster', 'vans', 'Roomster', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('favorit', '', 'Favorit', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('favorit-estate', '', 'Favorit Estate', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('felicia-combi', '', 'Felicia Combi', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('860', '', '860', 'skoda');
-INSERT INTO model(id, body, name, make_id) VALUES ('100-series', '', '100 series', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('favorit', 'unknown', 'Favorit', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('favorit-estate', 'unknown', 'Favorit Estate', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('felicia-combi', 'unknown', 'Felicia Combi', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('860', 'unknown', '860', 'skoda');
+INSERT INTO model(id, body, name, make_id) VALUES ('100-series', 'unknown', '100 series', 'skoda');
 INSERT INTO model(id, body, name, make_id) VALUES ('fabia-combi-rs', 'hatchbacks', 'Fabia Combi RS', 'skoda');
 
 -- SMART
@@ -2345,10 +2345,10 @@ INSERT INTO model(id, body, name, make_id) VALUES ('forfour-brabus', 'hatchbacks
 INSERT INTO model(id, body, name, make_id) VALUES ('crossblade', 'convertibles', 'crossblade', 'smart');
 
 -- SPYKER
-INSERT INTO model(id, body, name, make_id) VALUES ('c12-laturbie', '', 'C12 LaTurbie', 'spyker');
-INSERT INTO model(id, body, name, make_id) VALUES ('c8-spyder', '', 'C8 Spyder', 'spyker');
-INSERT INTO model(id, body, name, make_id) VALUES ('c8-laviolette', '', 'C8 Laviolette', 'spyker');
-INSERT INTO model(id, body, name, make_id) VALUES ('c8-double-12-s', '', 'C8 Double 12 S', 'spyker');
+INSERT INTO model(id, body, name, make_id) VALUES ('c12-laturbie', 'unknown', 'C12 LaTurbie', 'spyker');
+INSERT INTO model(id, body, name, make_id) VALUES ('c8-spyder', 'unknown', 'C8 Spyder', 'spyker');
+INSERT INTO model(id, body, name, make_id) VALUES ('c8-laviolette', 'unknown', 'C8 Laviolette', 'spyker');
+INSERT INTO model(id, body, name, make_id) VALUES ('c8-double-12-s', 'unknown', 'C8 Double 12 S', 'spyker');
 INSERT INTO model(id, body, name, make_id) VALUES ('c8-preliator', 'coupes', 'C8 Preliator', 'spyker');
 
 -- SSANG-YONG
@@ -2365,11 +2365,11 @@ INSERT INTO model(id, body, name, make_id) VALUES ('actyon', 'suvs', 'Actyon', '
 
 -- SUBARU
 INSERT INTO model(id, body, name, make_id) VALUES ('trezia', 'hatchbacks', 'Trezia', 'subaru');
-INSERT INTO model(id, body, name, make_id) VALUES ('xv', '', 'XV', 'subaru');
+INSERT INTO model(id, body, name, make_id) VALUES ('xv', 'unknown', 'XV', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('exiga-liberty', 'wagons', 'Exiga Liberty', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('liberty-1', 'sedans', 'Liberty', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('wrx', 'sedans', 'WRX', 'subaru');
-INSERT INTO model(id, body, name, make_id) VALUES ('brz', '', 'BRZ', 'subaru');
+INSERT INTO model(id, body, name, make_id) VALUES ('brz', 'unknown', 'BRZ', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('legacy', 'sedans', 'Legacy', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('impreza-wrx-sti', 'sedans', 'Impreza WRX STi', 'subaru');
 INSERT INTO model(id, body, name, make_id) VALUES ('outback', 'wagons', 'Outback', 'subaru');
@@ -2388,7 +2388,7 @@ INSERT INTO model(id, body, name, make_id) VALUES ('vivio', 'hatchbacks', 'Vivio
 INSERT INTO model(id, body, name, make_id) VALUES ('baja', 'trucks', 'Baja', 'subaru');
 
 -- SUZUKI
-INSERT INTO model(id, body, name, make_id) VALUES ('vitara', '', 'Vitara', 'suzuki');
+INSERT INTO model(id, body, name, make_id) VALUES ('vitara', 'unknown', 'Vitara', 'suzuki');
 INSERT INTO model(id, body, name, make_id) VALUES ('kizashi', 'sedans', 'Kizashi', 'suzuki');
 INSERT INTO model(id, body, name, make_id) VALUES ('baleno-1', 'hatchbacks', 'Baleno', 'suzuki');
 INSERT INTO model(id, body, name, make_id) VALUES ('apv', 'vans', 'APV', 'suzuki');
@@ -2682,9 +2682,9 @@ INSERT INTO model(id, body, name, make_id) VALUES ('gt-mf4', 'coupes', 'GT MF4',
 INSERT INTO model(id, body, name, make_id) VALUES ('mf5-roadster', 'convertibles', 'MF5 Roadster', 'wiesmann');
 
 -- ZENDER
-INSERT INTO model(id, body, name, make_id) VALUES ('escape-6', '', 'Escape 6', 'zender');
-INSERT INTO model(id, body, name, make_id) VALUES ('fact-4-biturbo', '', 'Fact 4 BiTurbo', 'zender');
-INSERT INTO model(id, body, name, make_id) VALUES ('fact-4-spider', '', 'Fact 4 Spider', 'zender');
-INSERT INTO model(id, body, name, make_id) VALUES ('progetto-5', '', 'Progetto 5', 'zender');
-INSERT INTO model(id, body, name, make_id) VALUES ('straight-8', '', 'Straight 8', 'zender');
-INSERT INTO model(id, body, name, make_id) VALUES ('thirty-7', '', 'Thirty 7', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('escape-6', 'unknown', 'Escape 6', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('fact-4-biturbo', 'unknown', 'Fact 4 BiTurbo', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('fact-4-spider', 'unknown', 'Fact 4 Spider', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('progetto-5', 'unknown', 'Progetto 5', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('straight-8', 'unknown', 'Straight 8', 'zender');
+INSERT INTO model(id, body, name, make_id) VALUES ('thirty-7', 'unknown', 'Thirty 7', 'zender');

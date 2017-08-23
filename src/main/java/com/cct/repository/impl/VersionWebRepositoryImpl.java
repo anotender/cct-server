@@ -3,12 +3,13 @@ package com.cct.repository.impl;
 import com.cct.model.Version;
 import com.cct.repository.api.VersionWebRepository;
 import com.cct.util.HttpUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
@@ -16,7 +17,6 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
 
     private final HttpUtils httpUtils;
     private final String baseUrl;
-    private final List<String> fuelTypes = Arrays.asList("Diesel", "Gasoline", "Hybrid", "Ethanol");
 
     public VersionWebRepositoryImpl(HttpUtils httpUtils) {
         this.httpUtils = httpUtils;
@@ -26,20 +26,10 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
     @Override
     public void fetchData(Version v) {
         httpUtils
-                .getWebsiteBody(baseUrl + "/cars/" + v.getId())
+                .getWebsiteBody(baseUrl + "/cars/" + new String(Base64.getUrlDecoder().decode(v.getId())))
                 .ifPresent(e -> {
-                    String fuel = e
-                            .select("dl[title='General Specs']")
-                            .select("dt")
-                            .stream()
-                            .map(Element::text)
-                            .filter(fuelTypes::contains)
-                            .map(String::trim)
-                            .findFirst()
-                            .orElseThrow(RuntimeException::new);
-
                     Double[] fuelConsumptionSpecs = e
-                            .select("d1[title='Fuel Consumption Specs']")
+                            .select("dl[title='Fuel Consumption Specs']")
                             .select("dd")
                             .stream()
                             .map(Element::text)
@@ -49,10 +39,9 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                             .collect(Collectors.toList())
                             .toArray(new Double[]{});
 
-                    v.setFuel(fuel);
                     v.setCityFuelConsumption(fuelConsumptionSpecs[0]);
-                    v.setCityFuelConsumption(fuelConsumptionSpecs[0]);
-                    v.setCityFuelConsumption(fuelConsumptionSpecs[0]);
+                    v.setHighwayFuelConsumption(fuelConsumptionSpecs[1]);
+                    v.setMixedFuelConsumption(fuelConsumptionSpecs[2]);
                 });
     }
 
@@ -63,20 +52,47 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                 .orElseThrow(RuntimeException::new)
                 .select("div[itemtype='https://schema.org/Car']")
                 .stream()
-                .map(e -> {
+                .flatMap(e -> {
+                    String years = e.select("p.years").text();
+                    return e
+                            .select("div.mot")
+                            .stream()
+                            .map(element -> Pair.of(years, element));
+                })
+                .flatMap(p -> {
+                    String fuel = p
+                            .getRight()
+                            .select("b")
+                            .text()
+                            .replace(" ENGINES:", "");
+                    return p
+                            .getRight()
+                            .select("p.engitm")
+                            .stream()
+                            .map(e -> Triple.of(p.getLeft(), fuel, e));
+                })
+                .map(t -> {
+                    String name = t
+                            .getRight()
+                            .select("span")
+                            .text();
+
+                    String id = Base64
+                            .getUrlEncoder()
+                            .encodeToString(t
+                                    .getRight()
+                                    .select("a")
+                                    .attr("href")
+                                    .replace(baseUrl + "/cars/", "")
+                                    .getBytes()
+                            );
+
                     Version version = new Version();
 
-                    String id = e
-                            .select("p.engitm > a")
-                            .attr("href")
-                            .replace(baseUrl + "/cars/", "");
                     version.setId(id);
-
-                    String years = e.select("p.years").text();
-                    version.setYears(years);
-
-                    String name = e.select("p.engitm > a > span").text();
                     version.setName(name);
+                    version.setYears(t.getLeft());
+                    version.setFuel(t.getMiddle());
 
                     return version;
                 })

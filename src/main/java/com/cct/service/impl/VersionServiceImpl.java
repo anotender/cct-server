@@ -71,6 +71,6 @@ public class VersionServiceImpl implements VersionService {
     }
 
     private boolean isFullyFetched(Version v) {
-        return v.getFuel() != null;
+        return v.getCityFuelConsumption() != null && v.getHighwayFuelConsumption() != null && v.getMixedFuelConsumption() != null;
     }
 }

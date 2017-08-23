@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
         <jjwt.version>0.7.0</jjwt.version>
         <jsoup.version>1.10.3</jsoup.version>
+        <apache.commons.lang.version>3.6</apache.commons.lang.version>
     </properties>
 
     <dependencies>
@@ -67,6 +68,11 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.lang.version}</version>
         </dependency>
 
         <!--TEST-->
