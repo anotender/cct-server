@@ -40,7 +40,7 @@ public class UserController {
         return ResponseEntity.ok(carService.getCarsForUser(id));
     }
 
-    @PostMapping(produces = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         UserDTO savedUserDTO = userService.save(userDTO);
         URI location = ServletUriComponentsBuilder

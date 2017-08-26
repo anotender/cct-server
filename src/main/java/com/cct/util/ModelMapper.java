@@ -175,4 +175,29 @@ public class ModelMapper {
 
         return versionDTO;
     }
+
+    public FuelRefill convertToEntity(FuelRefillDTO fuelRefillDTO) {
+        FuelRefill fuelRefill = new FuelRefill();
+
+        fuelRefill.setId(fuelRefillDTO.getId());
+        fuelRefill.setDistance(fuelRefillDTO.getDistance());
+        fuelRefill.setLiters(fuelRefillDTO.getLiters());
+
+        Car car = new Car();
+        car.setId(fuelRefillDTO.getCarId());
+        fuelRefill.setCar(car);
+
+        return fuelRefill;
+    }
+
+    public FuelRefillDTO convertToDTO(FuelRefill fuelRefill) {
+        FuelRefillDTO fuelRefillDTO = new FuelRefillDTO();
+
+        fuelRefillDTO.setId(fuelRefill.getId());
+        fuelRefillDTO.setDistance(fuelRefill.getDistance());
+        fuelRefillDTO.setLiters(fuelRefill.getLiters());
+        fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
+
+        return fuelRefillDTO;
+    }
 }

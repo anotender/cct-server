@@ -8,4 +8,6 @@ public interface CarService {
     CarDTO getCar(Long id);
 
     Collection<CarDTO> getCarsForUser(Long userId);
+
+    CarDTO save(CarDTO carDTO);
 }

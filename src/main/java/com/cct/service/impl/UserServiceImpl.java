@@ -8,12 +8,14 @@ import com.cct.service.api.UserService;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static com.cct.exception.ErrorInfo.USER_NOT_FOUND;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

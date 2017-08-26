@@ -7,12 +7,14 @@ import com.cct.service.api.MakeService;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static com.cct.exception.ErrorInfo.MAKE_NOT_FOUND;
 
 @Service
+@Transactional
 public class MakeServiceImpl implements MakeService {
 
     private final MakeRepository makeRepository;

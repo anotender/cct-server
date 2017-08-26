@@ -2,10 +2,9 @@ package com.cct.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -13,6 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 @Data
 public class Car {
     @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -22,4 +22,7 @@ public class Car {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)
     private User user;
+
+    @OneToMany(fetch = LAZY, mappedBy = "car")
+    private Set<FuelRefill> fuelRefills = new HashSet<>();
 }
