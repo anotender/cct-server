@@ -2,31 +2,26 @@ package com.cct.repository.impl;
 
 import com.cct.model.Version;
 import com.cct.repository.api.VersionWebRepository;
-import com.cct.util.HttpUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 public class VersionWebRepositoryImpl implements VersionWebRepository {
 
-    private final HttpUtils httpUtils;
-    private final String baseUrl;
-
-    public VersionWebRepositoryImpl(HttpUtils httpUtils) {
-        this.httpUtils = httpUtils;
-        this.baseUrl = "https://www.autoevolution.com";
-    }
+    private final String baseUrl = "https://www.autoevolution.com";
 
     @Override
     public void fetchData(Version v) {
-        httpUtils
-                .getWebsiteBody(baseUrl + "/cars/" + new String(Base64.getUrlDecoder().decode(v.getId())))
+        getWebsiteBody(baseUrl + "/cars/" + new String(Base64.getUrlDecoder().decode(v.getId())))
                 .ifPresent(e -> {
                     Double[] fuelConsumptionSpecs = e
                             .select("dl[title='Fuel Consumption Specs']")
@@ -47,8 +42,7 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
 
     @Override
     public Collection<Version> findByMakeIdAndModelId(String makeId, String modelId) {
-        return httpUtils
-                .getWebsiteBody(baseUrl + "/" + makeId + "/" + modelId)
+        return getWebsiteBody(baseUrl + "/" + makeId + "/" + modelId)
                 .orElseThrow(RuntimeException::new)
                 .select("div[itemtype='https://schema.org/Car']")
                 .stream()
@@ -97,5 +91,14 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                     return version;
                 })
                 .collect(Collectors.toSet());
+    }
+
+    private Optional<Element> getWebsiteBody(String url) {
+        try {
+            return Optional.of(Jsoup.connect(url).get().body());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

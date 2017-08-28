@@ -35,12 +35,6 @@ public class CarController {
         return ResponseEntity.ok(fuelRefillService.getFuelRefillsForCar(id));
     }
 
-    @PostMapping(value = "/{id}/fuelrefills", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FuelRefillDTO> getFuelRefillsForCar(@PathVariable("id") Long id, @RequestBody FuelRefillDTO fuelRefillDTO) {
-        fuelRefillDTO.setCarId(id);
-        return ResponseEntity.ok(fuelRefillService.save(fuelRefillDTO));
-    }
-
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> saveCar(@RequestBody CarDTO carDTO) {
         CarDTO savedCarDTO = carService.save(carDTO);
