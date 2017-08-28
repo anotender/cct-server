@@ -15,7 +15,7 @@ import java.util.Collection;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api/make")
+@RequestMapping("/api/makes")
 public class MakeController {
 
     private final MakeService makeService;
@@ -36,7 +36,7 @@ public class MakeController {
         return ResponseEntity.ok(makeService.getMakes());
     }
 
-    @GetMapping(value = "/{id}/model", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}/models", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<ModelDTO>> getMakes(@PathVariable("id") String id) {
         return ResponseEntity.ok(modelService.getModelsByMakeId(id));
     }

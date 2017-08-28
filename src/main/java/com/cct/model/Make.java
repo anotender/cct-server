@@ -1,14 +1,32 @@
 package com.cct.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
+
+@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"models"})
 public class Make {
+    @Id
     private String id;
+
+    @Column(nullable = false, unique = true)
     private String name;
-    private String country;
+
+    @Column(nullable = false)
+    private String logoUrl;
+
+    @OneToMany(fetch = LAZY, mappedBy = "make")
+    private Set<Model> models = new HashSet<>();
 }
