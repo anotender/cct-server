@@ -182,6 +182,7 @@ public class ModelMapper {
         fuelRefill.setId(fuelRefillDTO.getId());
         fuelRefill.setDistance(fuelRefillDTO.getDistance());
         fuelRefill.setLiters(fuelRefillDTO.getLiters());
+        fuelRefill.setDate(fuelRefillDTO.getDate());
 
         Car car = new Car();
         car.setId(fuelRefillDTO.getCarId());
@@ -196,6 +197,7 @@ public class ModelMapper {
         fuelRefillDTO.setId(fuelRefill.getId());
         fuelRefillDTO.setDistance(fuelRefill.getDistance());
         fuelRefillDTO.setLiters(fuelRefill.getLiters());
+        fuelRefillDTO.setDate(fuelRefill.getDate());
         fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
 
         return fuelRefillDTO;
