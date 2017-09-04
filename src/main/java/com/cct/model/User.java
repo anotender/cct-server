@@ -1,6 +1,7 @@
 package com.cct.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 @Data
 @Entity
 @Table(name = "app_user")
+@EqualsAndHashCode(exclude = {"cars"})
 public class User {
     @Id
     @GeneratedValue

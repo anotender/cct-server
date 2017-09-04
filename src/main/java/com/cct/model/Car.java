@@ -1,6 +1,7 @@
 package com.cct.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = {"fuelRefills"})
 public class Car {
     @Id
     @GeneratedValue
