@@ -23,8 +23,11 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public JWTLoginFilter(TokenAuthenticationService tokenAuthenticationService, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher("/api/login"));
-        this.tokenAuthenticationService = tokenAuthenticationService;
+
         setAuthenticationManager(authManager);
+        setContinueChainBeforeSuccessfulAuthentication(true);
+
+        this.tokenAuthenticationService = tokenAuthenticationService;
     }
 
     @Override
