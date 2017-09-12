@@ -154,6 +154,7 @@ public class ModelMapper {
         model.setId(versionDTO.getModelId());
         version.setModel(model);
 
+        version.setFuel(versionDTO.getFuel());
         version.setYears(versionDTO.getYears());
         version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
         version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
@@ -168,6 +169,7 @@ public class ModelMapper {
         versionDTO.setId(version.getId());
         versionDTO.setName(version.getName());
         versionDTO.setModelId(version.getModel().getId());
+        versionDTO.setFuel(version.getFuel());
         versionDTO.setYears(version.getYears());
         versionDTO.setCityFuelConsumption(version.getCityFuelConsumption());
         versionDTO.setHighwayFuelConsumption(version.getHighwayFuelConsumption());
