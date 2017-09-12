@@ -1,6 +1,8 @@
 package com.cct.repository.impl;
 
+import com.cct.exception.BadRequestException;
 import com.cct.model.Version;
+import com.cct.repository.api.VersionRepository;
 import com.cct.repository.api.VersionWebRepository;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -14,30 +16,47 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.cct.exception.ErrorInfo.VERSION_NOT_FOUND;
+
 @Repository
 public class VersionWebRepositoryImpl implements VersionWebRepository {
 
     private final String baseUrl = "https://www.autoevolution.com";
+    private final VersionRepository versionRepository;
+
+    public VersionWebRepositoryImpl(VersionRepository versionRepository) {
+        this.versionRepository = versionRepository;
+    }
 
     @Override
     public void fetchData(Version v) {
-        getWebsiteBody(baseUrl + "/cars/" + new String(Base64.getUrlDecoder().decode(v.getId())))
-                .ifPresent(e -> {
+        String calledVersionId = decodeId(v.getId());
+        getWebsiteBody(baseUrl + "/cars/" + calledVersionId)
+                .map(e -> e.select("div.engine-block"))
+                .ifPresent(elements -> elements.forEach(e -> {
+                    String id = calledVersionId.substring(0, calledVersionId.indexOf("#a") + 2) + e.attr("id");
+                    Version version = versionRepository
+                            .findOneById(encodeId(id))
+                            .orElseThrow(() -> new BadRequestException(VERSION_NOT_FOUND));
+
                     Double[] fuelConsumptionSpecs = e
                             .select("dl[title='Fuel Consumption Specs']")
                             .select("dd")
                             .stream()
                             .map(Element::text)
+                            .filter(s -> s.contains("OR"))
                             .map(s -> s.substring(s.indexOf("OR") + 3))
                             .map(s -> s.replace(" L/100Km", ""))
                             .map(Double::new)
                             .collect(Collectors.toList())
                             .toArray(new Double[]{});
 
-                    v.setCityFuelConsumption(fuelConsumptionSpecs[0]);
-                    v.setHighwayFuelConsumption(fuelConsumptionSpecs[1]);
-                    v.setMixedFuelConsumption(fuelConsumptionSpecs[2]);
-                });
+                    if (fuelConsumptionSpecs.length == 3) {
+                        version.setCityFuelConsumption(fuelConsumptionSpecs[0]);
+                        version.setHighwayFuelConsumption(fuelConsumptionSpecs[1]);
+                        version.setMixedFuelConsumption(fuelConsumptionSpecs[2]);
+                    }
+                }));
     }
 
     @Override
@@ -54,11 +73,7 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                             .map(element -> Pair.of(years, element));
                 })
                 .flatMap(p -> {
-                    String fuel = p
-                            .getRight()
-                            .select("b")
-                            .text()
-                            .replace(" ENGINES:", "");
+                    String fuel = extractFuel(p.getRight());
                     return p
                             .getRight()
                             .select("p.engitm")
@@ -66,31 +81,40 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                             .map(e -> Triple.of(p.getLeft(), fuel, e));
                 })
                 .map(t -> {
-                    String name = t
-                            .getRight()
-                            .select("span")
-                            .text();
-
-                    String id = Base64
-                            .getUrlEncoder()
-                            .encodeToString(t
-                                    .getRight()
-                                    .select("a")
-                                    .attr("href")
-                                    .replace(baseUrl + "/cars/", "")
-                                    .getBytes()
-                            );
-
                     Version version = new Version();
 
-                    version.setId(id);
-                    version.setName(name);
+                    version.setId(extractId(t.getRight()));
+                    version.setName(extractName(t.getRight()));
                     version.setYears(t.getLeft());
                     version.setFuel(t.getMiddle());
 
                     return version;
                 })
                 .collect(Collectors.toSet());
+    }
+
+    private String extractName(Element e) {
+        return e.select("span").text();
+    }
+
+    private String extractId(Element e) {
+        String id = e
+                .select("a")
+                .attr("href")
+                .replace(baseUrl + "/cars/", "");
+        return encodeId(id);
+    }
+
+    private String extractFuel(Element e) {
+        return e.select("b").text().replace(" ENGINES:", "");
+    }
+
+    private String encodeId(String id) {
+        return Base64.getUrlEncoder().encodeToString(id.getBytes());
+    }
+
+    private String decodeId(String id) {
+        return new String(Base64.getUrlDecoder().decode(id));
     }
 
     private Optional<Element> getWebsiteBody(String url) {
