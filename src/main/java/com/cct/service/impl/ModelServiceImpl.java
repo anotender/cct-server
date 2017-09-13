@@ -27,10 +27,10 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Collection<ModelDTO> getModelsByMakeId(String id) {
         return modelRepository
-                .findByMakeId(id)
+                .findByMakeIdOrderByName(id)
                 .stream()
                 .map(modelMapper::convertToDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override

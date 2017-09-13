@@ -37,7 +37,7 @@ public class MakeController {
     }
 
     @GetMapping(value = "/{id}/models", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<ModelDTO>> getMakes(@PathVariable("id") String id) {
+    public ResponseEntity<Collection<ModelDTO>> getModelsForMake(@PathVariable("id") String id) {
         return ResponseEntity.ok(modelService.getModelsByMakeId(id));
     }
 }

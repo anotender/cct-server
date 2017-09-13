@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface ModelRepository extends JpaRepository<Model, String> {
     Optional<Model> findOneById(String id);
 
-    Collection<Model> findByMakeId(String id);
+    Collection<Model> findByMakeIdOrderByName(String id);
 }

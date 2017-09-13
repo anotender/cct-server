@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,14 +61,15 @@ public class VersionServiceImpl implements VersionService {
                     .findByMakeIdAndModelId(model.getMake().getId(), modelId)
                     .stream()
                     .peek(v -> v.setModel(model))
-                    .collect(Collectors.toSet());
+                    .sorted(Comparator.comparing(Version::getYears))
+                    .collect(Collectors.toList());
             versionRepository.save(versions);
         }
 
         return versions
                 .stream()
                 .map(modelMapper::convertToDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private boolean isFullyFetched(Version v) {
