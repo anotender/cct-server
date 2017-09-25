@@ -6,6 +6,7 @@ import com.cct.model.dto.UserDTO;
 import com.cct.repository.api.UserRepository;
 import com.cct.service.api.UserService;
 import com.cct.util.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,10 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO save(UserDTO userDTO) {
         User user = modelMapper.convertToEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return modelMapper.convertToDTO(userRepository.save(user));
     }
 }

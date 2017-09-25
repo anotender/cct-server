@@ -21,7 +21,7 @@ public class VersionController {
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<VersionDTO> getVersionForModel(@PathVariable("id") String id) {
+    public ResponseEntity<VersionDTO> getVersion(@PathVariable("id") String id) {
         return ResponseEntity.ok(versionService.getVersion(id));
     }
 }
