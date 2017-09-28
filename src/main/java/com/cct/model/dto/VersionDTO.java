@@ -3,6 +3,9 @@ package com.cct.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
@@ -16,4 +19,5 @@ public class VersionDTO {
     private Double cityFuelConsumption;
     private Double highwayFuelConsumption;
     private Double mixedFuelConsumption;
+    private Set<Long> cars = new HashSet<>();
 }

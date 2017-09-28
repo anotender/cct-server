@@ -50,6 +50,42 @@ public class VersionServiceImpl implements VersionService {
     }
 
     @Override
+    public Collection<VersionDTO> getVersions() {
+        return versionRepository
+                .findAll()
+                .stream()
+                .map(modelMapper::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<VersionDTO> getVersions(Integer limit) {
+        return getVersions()
+                .stream()
+                .limit(limit)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Collection<VersionDTO> getVersions(Boolean orderByPopularity) {
+        if (orderByPopularity) {
+            return getVersions()
+                    .stream()
+                    .sorted((v1, v2) -> -1 * Long.compare(v1.getCars().size(), v2.getCars().size()))
+                    .collect(Collectors.toList());
+        }
+        return getVersions();
+    }
+
+    @Override
+    public Collection<VersionDTO> getVersions(Integer limit, Boolean orderByPopularity) {
+        return getVersions(orderByPopularity)
+                .stream()
+                .limit(limit)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Collection<VersionDTO> getVersionsForModel(String modelId) {
         Collection<Version> versions = versionRepository.findByModelId(modelId);
 

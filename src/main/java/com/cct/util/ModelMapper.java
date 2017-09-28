@@ -159,6 +159,16 @@ public class ModelMapper {
         version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
         version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
         version.setMixedFuelConsumption(versionDTO.getMixedFuelConsumption());
+        version.setCars(versionDTO
+                .getCars()
+                .stream()
+                .map(id -> {
+                    Car c = new Car();
+                    c.setId(id);
+                    return c;
+                })
+                .collect(Collectors.toSet())
+        );
 
         return version;
     }
@@ -174,6 +184,12 @@ public class ModelMapper {
         versionDTO.setCityFuelConsumption(version.getCityFuelConsumption());
         versionDTO.setHighwayFuelConsumption(version.getHighwayFuelConsumption());
         versionDTO.setMixedFuelConsumption(version.getMixedFuelConsumption());
+        versionDTO.setCars(version
+                .getCars()
+                .stream()
+                .map(Car::getId)
+                .collect(Collectors.toSet())
+        );
 
         return versionDTO;
     }
