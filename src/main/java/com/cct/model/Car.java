@@ -25,6 +25,9 @@ public class Car {
     @JoinColumn(nullable = false)
     private User user;
 
+    @Column(nullable = false)
+    private String name;
+
     @OneToMany(fetch = LAZY, mappedBy = "car")
     private Set<FuelRefill> fuelRefills = new HashSet<>();
 }

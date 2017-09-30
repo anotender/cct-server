@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -31,7 +32,10 @@ public class UserController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<UserDTO>> getUsers() {
+    public ResponseEntity<Collection<UserDTO>> getUsers(@RequestParam(value = "email", required = false) String email) {
+        if (email != null) {
+            return ResponseEntity.ok(Collections.singletonList(userService.getUser(email)));
+        }
         return ResponseEntity.ok(userService.getUsers());
     }
 

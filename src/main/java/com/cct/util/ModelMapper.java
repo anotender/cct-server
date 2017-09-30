@@ -44,6 +44,7 @@ public class ModelMapper {
         Car car = new Car();
 
         car.setId(carDTO.getId());
+        car.setName(carDTO.getName());
 
         Version version = new Version();
         version.setId(carDTO.getVersionId());
@@ -62,6 +63,7 @@ public class ModelMapper {
         carDTO.setId(car.getId());
         carDTO.setUserId(car.getUser().getId());
         carDTO.setVersionId(car.getVersion().getId());
+        carDTO.setName(car.getName());
 
         return carDTO;
     }

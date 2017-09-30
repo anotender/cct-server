@@ -30,20 +30,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUser(Long id) {
+        return userRepository
+                .findOneById(id)
+                .map(modelMapper::convertToDTO)
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
+    }
+
+    @Override
+    public UserDTO getUser(String email) {
+        return userRepository
+                .findOneByEmail(email)
+                .map(modelMapper::convertToDTO)
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
+    }
+
+    @Override
     public Collection<UserDTO> getUsers() {
         return userRepository
                 .findAll()
                 .stream()
                 .map(modelMapper::convertToDTO)
                 .collect(Collectors.toSet());
-    }
-
-    @Override
-    public UserDTO getUser(Long id) {
-        return userRepository
-                .findOneById(id)
-                .map(modelMapper::convertToDTO)
-                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
     }
 
     @Override

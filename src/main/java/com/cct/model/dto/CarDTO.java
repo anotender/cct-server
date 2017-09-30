@@ -7,4 +7,5 @@ public class CarDTO {
     private Long id;
     private String versionId;
     private Long userId;
+    private String name;
 }
