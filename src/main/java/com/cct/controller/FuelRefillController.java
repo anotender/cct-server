@@ -21,12 +21,12 @@ public class FuelRefillController {
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FuelRefillDTO> getFuelRefillForCar(@PathVariable("id") Long id) {
+    public ResponseEntity<FuelRefillDTO> getFuelRefill(@PathVariable("id") Long id) {
         return ResponseEntity.ok(fuelRefillService.getFuelRefill(id));
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FuelRefillDTO> saveFuelRefillForCar(@RequestBody FuelRefillDTO fuelRefillDTO) {
+    public ResponseEntity<FuelRefillDTO> saveFuelRefill(@RequestBody FuelRefillDTO fuelRefillDTO) {
         FuelRefillDTO savedFuelRefillDTO = fuelRefillService.save(fuelRefillDTO);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

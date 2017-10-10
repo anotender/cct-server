@@ -20,4 +20,5 @@ public class VersionDTO {
     private Double highwayFuelConsumption;
     private Double mixedFuelConsumption;
     private Set<Long> cars = new HashSet<>();
+    private Set<Long> ratings = new HashSet<>();
 }

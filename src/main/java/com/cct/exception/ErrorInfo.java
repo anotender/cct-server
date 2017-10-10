@@ -15,6 +15,7 @@ public enum ErrorInfo {
     VERSION_NOT_FOUND("Version not found", HttpStatus.NOT_FOUND),
     CAR_NOT_FOUND("Car not found", HttpStatus.NOT_FOUND),
     FUEL_REFILL_NOT_FOUND("Fuel refill not found", HttpStatus.NOT_FOUND),
+    RATING_NOT_FOUND("Rating not found", HttpStatus.NOT_FOUND),
     UNAUTHORIZED("Unauthorized", HttpStatus.UNAUTHORIZED),
     UNKNOWN("Unknown error", HttpStatus.BAD_REQUEST);
 

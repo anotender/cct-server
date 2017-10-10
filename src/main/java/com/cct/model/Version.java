@@ -11,7 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"model", "cars"})
+@EqualsAndHashCode(exclude = {"model", "cars", "ratings"})
 public class Version {
     @Id
     private String id;
@@ -26,10 +26,18 @@ public class Version {
     @OneToMany(fetch = LAZY, mappedBy = "version")
     private Set<Car> cars = new HashSet<>();
 
+    @OneToMany(fetch = LAZY, mappedBy = "version")
+    private Set<Rating> ratings = new HashSet<>();
+
     @Column(nullable = false)
     private String years;
+
     private String fuel;
+
     private Double cityFuelConsumption;
+
     private Double highwayFuelConsumption;
+
     private Double mixedFuelConsumption;
+
 }

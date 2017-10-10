@@ -15,4 +15,5 @@ public class UserDTO {
     private String email;
     private String password;
     private Set<CarDTO> cars = new HashSet<>();
+    private Set<RatingDTO> ratings = new HashSet<>();
 }

@@ -21,6 +21,12 @@ public class ModelMapper {
                 .map(this::convertToEntity)
                 .collect(Collectors.toSet())
         );
+        user.setRatings(userDTO
+                .getRatings()
+                .stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toSet())
+        );
 
         return user;
     }
@@ -32,6 +38,12 @@ public class ModelMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setCars(user
                 .getCars()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toSet())
+        );
+        userDTO.setRatings(user
+                .getRatings()
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toSet())
@@ -171,6 +183,16 @@ public class ModelMapper {
                 })
                 .collect(Collectors.toSet())
         );
+        version.setRatings(versionDTO
+                .getRatings()
+                .stream()
+                .map(id -> {
+                    Rating r = new Rating();
+                    r.setId(id);
+                    return r;
+                })
+                .collect(Collectors.toSet())
+        );
 
         return version;
     }
@@ -190,6 +212,12 @@ public class ModelMapper {
                 .getCars()
                 .stream()
                 .map(Car::getId)
+                .collect(Collectors.toSet())
+        );
+        versionDTO.setRatings(version
+                .getRatings()
+                .stream()
+                .map(Rating::getId)
                 .collect(Collectors.toSet())
         );
 
@@ -221,5 +249,35 @@ public class ModelMapper {
         fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
 
         return fuelRefillDTO;
+    }
+
+    public Rating convertToEntity(RatingDTO ratingDTO) {
+        Rating rating = new Rating();
+
+        rating.setId(ratingDTO.getId());
+        rating.setComment(ratingDTO.getComment());
+        rating.setPoints(ratingDTO.getPoints());
+
+        Version version = new Version();
+        version.setId(ratingDTO.getVersionId());
+        rating.setVersion(version);
+
+        User user = new User();
+        user.setId(ratingDTO.getUserId());
+        rating.setUser(user);
+
+        return rating;
+    }
+
+    public RatingDTO convertToDTO(Rating rating) {
+        RatingDTO ratingDTO = new RatingDTO();
+
+        ratingDTO.setId(rating.getId());
+        ratingDTO.setPoints(rating.getPoints());
+        ratingDTO.setComment(rating.getComment());
+        ratingDTO.setVersionId(rating.getVersion().getId());
+        ratingDTO.setUserId(rating.getUser().getId());
+
+        return ratingDTO;
     }
 }
