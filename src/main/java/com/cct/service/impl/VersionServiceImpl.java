@@ -59,29 +59,10 @@ public class VersionServiceImpl implements VersionService {
     }
 
     @Override
-    public Collection<VersionDTO> getVersions(Integer limit) {
+    public Collection<VersionDTO> getVersionsOrderByPopularity() {
         return getVersions()
                 .stream()
-                .limit(limit)
-                .collect(Collectors.toSet());
-    }
-
-    @Override
-    public Collection<VersionDTO> getVersions(Boolean orderByPopularity) {
-        if (orderByPopularity) {
-            return getVersions()
-                    .stream()
-                    .sorted((v1, v2) -> -1 * Long.compare(v1.getCars().size(), v2.getCars().size()))
-                    .collect(Collectors.toList());
-        }
-        return getVersions();
-    }
-
-    @Override
-    public Collection<VersionDTO> getVersions(Integer limit, Boolean orderByPopularity) {
-        return getVersions(orderByPopularity)
-                .stream()
-                .limit(limit)
+                .sorted((v1, v2) -> Long.compare(v2.getCars().size(), v1.getCars().size()))
                 .collect(Collectors.toList());
     }
 

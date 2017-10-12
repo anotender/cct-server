@@ -9,11 +9,7 @@ public interface VersionService {
 
     Collection<VersionDTO> getVersions();
 
-    Collection<VersionDTO> getVersions(Integer limit);
-
-    Collection<VersionDTO> getVersions(Boolean orderByPopularity);
-
-    Collection<VersionDTO> getVersions(Integer limit, Boolean orderByPopularity);
+    Collection<VersionDTO> getVersionsOrderByPopularity();
 
     Collection<VersionDTO> getVersionsForModel(String modelId);
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -25,19 +26,24 @@ public class VersionController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<VersionDTO>> getVersions(
-            @RequestParam(value = "orderbypopularity", required = false) Boolean orderByPopularity,
+            @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "limit", required = false) Integer limit
     ) {
         Collection<VersionDTO> versions;
-        if (orderByPopularity != null && limit != null) {
-            versions = versionService.getVersions(limit, orderByPopularity);
-        } else if (limit != null) {
-            versions = versionService.getVersions(limit);
-        } else if (orderByPopularity != null) {
-            versions = versionService.getVersions(orderByPopularity);
+
+        if ("orderByPopularity".equalsIgnoreCase(search)) {
+            versions = versionService.getVersionsOrderByPopularity();
         } else {
             versions = versionService.getVersions();
         }
+
+        if (limit != null) {
+            versions = versions
+                    .stream()
+                    .limit(limit)
+                    .collect(Collectors.toList());
+        }
+
         return ResponseEntity.ok(versions);
     }
 
