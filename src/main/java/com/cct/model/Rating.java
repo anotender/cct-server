@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
@@ -20,6 +21,10 @@ public class Rating {
     private Integer points;
 
     private String comment;
+
+    @NotNull
+    @Column(nullable = false)
+    private LocalDateTime date;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)

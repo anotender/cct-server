@@ -4,6 +4,10 @@ import com.cct.model.*;
 import com.cct.model.dto.*;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 @Component
@@ -257,6 +261,7 @@ public class ModelMapper {
         rating.setId(ratingDTO.getId());
         rating.setComment(ratingDTO.getComment());
         rating.setPoints(ratingDTO.getPoints());
+        rating.setDate(LocalDateTime.ofInstant(Instant.ofEpochMilli(ratingDTO.getDate()), ZoneId.systemDefault()));
 
         Version version = new Version();
         version.setId(ratingDTO.getVersionId());
@@ -275,6 +280,7 @@ public class ModelMapper {
         ratingDTO.setId(rating.getId());
         ratingDTO.setPoints(rating.getPoints());
         ratingDTO.setComment(rating.getComment());
+        ratingDTO.setDate(rating.getDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
         ratingDTO.setVersionId(rating.getVersion().getId());
         ratingDTO.setUserId(rating.getUser().getId());
 
