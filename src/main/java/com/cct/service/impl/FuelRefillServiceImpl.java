@@ -44,6 +44,15 @@ public class FuelRefillServiceImpl implements FuelRefillService {
     }
 
     @Override
+    public Collection<FuelRefillDTO> getFuelRefillsForFuelStation(String id) {
+        return fuelRefillRepository
+                .findByFuelStationId(id)
+                .stream()
+                .map(modelMapper::convertToDTO)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public FuelRefillDTO save(FuelRefillDTO fuelRefillDTO) {
         FuelRefill fuelRefill = modelMapper.convertToEntity(fuelRefillDTO);
         return modelMapper.convertToDTO(fuelRefillRepository.save(fuelRefill));

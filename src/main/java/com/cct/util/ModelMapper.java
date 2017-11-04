@@ -2,6 +2,7 @@ package com.cct.util;
 
 import com.cct.model.*;
 import com.cct.model.dto.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -240,6 +241,10 @@ public class ModelMapper {
         car.setId(fuelRefillDTO.getCarId());
         fuelRefill.setCar(car);
 
+        if (StringUtils.isNotBlank(fuelRefillDTO.getFuelStationId())) {
+            fuelRefill.setFuelStationId(fuelRefillDTO.getFuelStationId());
+        }
+
         return fuelRefill;
     }
 
@@ -251,6 +256,7 @@ public class ModelMapper {
         fuelRefillDTO.setLiters(fuelRefill.getLiters());
         fuelRefillDTO.setDate(fuelRefill.getDate());
         fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
+        fuelRefillDTO.setFuelStationId(fuelRefill.getFuelStationId());
 
         return fuelRefillDTO;
     }

@@ -9,5 +9,7 @@ public interface FuelRefillService {
 
     Collection<FuelRefillDTO> getFuelRefillsForCar(Long id);
 
+    Collection<FuelRefillDTO> getFuelRefillsForFuelStation(String id);
+
     FuelRefillDTO save(FuelRefillDTO fuelRefillDTO);
 }

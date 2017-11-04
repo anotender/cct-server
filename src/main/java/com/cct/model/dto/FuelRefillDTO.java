@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class FuelRefillDTO {
     private Long id;
     private Long carId;
+    private String fuelStationId;
     private Double liters;
     private LocalDateTime date;
     private Double distance;

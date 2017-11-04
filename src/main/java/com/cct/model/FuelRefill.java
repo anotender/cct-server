@@ -3,7 +3,6 @@ package com.cct.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
@@ -28,4 +27,6 @@ public class FuelRefill {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)
     private Car car;
+
+    private String fuelStationId;
 }

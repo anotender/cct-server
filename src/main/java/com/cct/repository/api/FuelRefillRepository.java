@@ -10,4 +10,6 @@ public interface FuelRefillRepository extends JpaRepository<FuelRefill, Long> {
     Optional<FuelRefill> findOneById(Long id);
 
     Collection<FuelRefill> findByCarId(Long id);
+
+    Collection<FuelRefill> findByFuelStationId(String id);
 }

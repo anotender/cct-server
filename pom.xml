@@ -74,6 +74,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons.lang.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
 
         <!--TEST-->
         <dependency>
