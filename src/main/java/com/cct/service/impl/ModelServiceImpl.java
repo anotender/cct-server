@@ -25,6 +25,24 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public Collection<ModelDTO> getModels() {
+        return modelRepository
+                .findAll()
+                .stream()
+                .map(modelMapper::convertToDTO)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Collection<ModelDTO> getModels(Collection<String> ids) {
+        return modelRepository
+                .findByIdIn(ids)
+                .stream()
+                .map(modelMapper::convertToDTO)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public Collection<ModelDTO> getModelsByMakeId(String id) {
         return modelRepository
                 .findByMakeIdOrderByName(id)

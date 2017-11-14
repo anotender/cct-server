@@ -4,6 +4,8 @@ import com.cct.model.dto.RatingDTO;
 import com.cct.model.dto.VersionDTO;
 import com.cct.service.api.RatingService;
 import com.cct.service.api.VersionService;
+import com.cct.util.RequestParamsUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +28,25 @@ public class VersionController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<VersionDTO>> getVersions(
+            @RequestParam(value = "id", required = false) String id,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "limit", required = false) Integer limit
     ) {
-        Collection<VersionDTO> versions;
+        Collection<VersionDTO> versions = null;
+
+        if (StringUtils.isNotBlank(id)) {
+            versions = versionService.getVersions(RequestParamsUtils.extractStringIdsFromParam(id));
+        }
 
         if ("orderByPopularity".equalsIgnoreCase(search)) {
-            versions = versionService.getVersionsOrderByPopularity();
-        } else {
+            if (versions == null) {
+                versions = versionService.getVersionsOrderByPopularity();
+            } else {
+                versions = versionService.getVersionsOrderByPopularity(versions);
+            }
+        }
+
+        if (versions == null) {
             versions = versionService.getVersions();
         }
 

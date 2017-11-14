@@ -10,4 +10,6 @@ public interface ModelRepository extends JpaRepository<Model, String> {
     Optional<Model> findOneById(String id);
 
     Collection<Model> findByMakeIdOrderByName(String id);
+
+    Collection<Model> findByIdIn(Collection<String> ids);
 }

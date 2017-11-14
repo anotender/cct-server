@@ -59,8 +59,21 @@ public class VersionServiceImpl implements VersionService {
     }
 
     @Override
+    public Collection<VersionDTO> getVersions(Collection<String> ids) {
+        return ids
+                .stream()
+                .map(this::getVersion)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public Collection<VersionDTO> getVersionsOrderByPopularity() {
-        return getVersions()
+        return getVersionsOrderByPopularity(getVersions());
+    }
+
+    @Override
+    public Collection<VersionDTO> getVersionsOrderByPopularity(Collection<VersionDTO> versions) {
+        return versions
                 .stream()
                 .sorted((v1, v2) -> Long.compare(v2.getCars().size(), v1.getCars().size()))
                 .collect(Collectors.toList());
