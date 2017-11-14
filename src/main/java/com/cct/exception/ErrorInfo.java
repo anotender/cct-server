@@ -26,4 +26,7 @@ public enum ErrorInfo {
     @Getter
     private final HttpStatus status;
 
+    @Getter
+    private final String code = this.name();
+
 }

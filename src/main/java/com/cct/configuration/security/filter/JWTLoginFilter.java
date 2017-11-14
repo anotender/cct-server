@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.cct.exception.ErrorInfo.UNAUTHORIZED;
+
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private final TokenAuthenticationService tokenAuthenticationService;
@@ -45,5 +47,13 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
         tokenAuthenticationService.addAuthentication(res, auth.getName());
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {
+        res.setStatus(UNAUTHORIZED.getStatus().value());
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Content-Type", "application/json");
+        new ObjectMapper().writeValue(res.getWriter(), UNAUTHORIZED);
     }
 }
