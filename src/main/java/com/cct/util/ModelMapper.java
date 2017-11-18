@@ -173,7 +173,7 @@ public class ModelMapper {
         model.setId(versionDTO.getModelId());
         version.setModel(model);
 
-        version.setFuel(versionDTO.getFuel());
+        version.setFuel(Fuel.valueOf(versionDTO.getFuel()));
         version.setYears(versionDTO.getYears());
         version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
         version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
@@ -208,7 +208,7 @@ public class ModelMapper {
         versionDTO.setId(version.getId());
         versionDTO.setName(version.getName());
         versionDTO.setModelId(version.getModel().getId());
-        versionDTO.setFuel(version.getFuel());
+        versionDTO.setFuel(version.getFuel().name());
         versionDTO.setYears(version.getYears());
         versionDTO.setCityFuelConsumption(version.getCityFuelConsumption());
         versionDTO.setHighwayFuelConsumption(version.getHighwayFuelConsumption());
@@ -267,7 +267,7 @@ public class ModelMapper {
         rating.setId(ratingDTO.getId());
         rating.setComment(ratingDTO.getComment());
         rating.setPoints(ratingDTO.getPoints());
-        rating.setDate(LocalDateTime.ofInstant(Instant.ofEpochMilli(ratingDTO.getDate()), ZoneId.systemDefault()));
+        rating.setDate(convertMillisToLocalDateTime(ratingDTO.getDate()));
 
         Version version = new Version();
         version.setId(ratingDTO.getVersionId());
@@ -286,10 +286,42 @@ public class ModelMapper {
         ratingDTO.setId(rating.getId());
         ratingDTO.setPoints(rating.getPoints());
         ratingDTO.setComment(rating.getComment());
-        ratingDTO.setDate(rating.getDate().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+        ratingDTO.setDate(convertLocalDateTimeToMillis(rating.getDate()));
         ratingDTO.setVersionId(rating.getVersion().getId());
         ratingDTO.setUserId(rating.getUser().getId());
 
         return ratingDTO;
+    }
+
+    public FuelPrice convertToEntity(FuelPriceDTO fuelPriceDTO) {
+        FuelPrice fuelPrice = new FuelPrice();
+
+        fuelPrice.setId(fuelPriceDTO.getId());
+        fuelPrice.setDate(convertMillisToLocalDateTime(fuelPriceDTO.getDate()));
+        fuelPrice.setFuel(Fuel.valueOf(fuelPriceDTO.getFuel()));
+        fuelPrice.setFuelStationId(fuelPriceDTO.getFuelStationId());
+        fuelPrice.setPrice(fuelPriceDTO.getPrice());
+
+        return fuelPrice;
+    }
+
+    public FuelPriceDTO convertToDTO(FuelPrice fuelPrice) {
+        FuelPriceDTO fuelPriceDTO = new FuelPriceDTO();
+
+        fuelPriceDTO.setId(fuelPrice.getId());
+        fuelPriceDTO.setDate(convertLocalDateTimeToMillis(fuelPrice.getDate()));
+        fuelPriceDTO.setFuel(fuelPrice.getFuel().name());
+        fuelPriceDTO.setFuelStationId(fuelPrice.getFuelStationId());
+        fuelPriceDTO.setPrice(fuelPrice.getPrice());
+
+        return fuelPriceDTO;
+    }
+
+    private Long convertLocalDateTimeToMillis(LocalDateTime date) {
+        return date.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
+    }
+
+    private LocalDateTime convertMillisToLocalDateTime(Long millis) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
     }
 }

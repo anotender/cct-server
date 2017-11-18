@@ -5,32 +5,24 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Entity
 @Data
-public class FuelRefill {
+public class FuelPrice {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Double liters;
+    private Fuel fuel;
 
     @Column(nullable = false)
-    private Double distance;
+    private Double price;
 
     @Column(nullable = false)
     private LocalDateTime date;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(nullable = false)
-    private Car car;
-
-    @OneToOne(fetch = LAZY)
-    @JoinColumn
-    private FuelPrice fuelPrice;
-
+    @Column(nullable = false)
     private String fuelStationId;
 }

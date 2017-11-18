@@ -1,6 +1,7 @@
 package com.cct.repository.impl;
 
 import com.cct.exception.BadRequestException;
+import com.cct.model.Fuel;
 import com.cct.model.Version;
 import com.cct.repository.api.VersionRepository;
 import com.cct.repository.api.VersionWebRepository;
@@ -10,22 +11,33 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.cct.exception.ErrorInfo.VERSION_NOT_FOUND;
+import static com.cct.model.Fuel.*;
 
 @Repository
 public class VersionWebRepositoryImpl implements VersionWebRepository {
 
     private final String baseUrl = "https://www.autoevolution.com";
     private final VersionRepository versionRepository;
+    private Map<String, Fuel> stringFuelMap = new HashMap<>();
 
     public VersionWebRepositoryImpl(VersionRepository versionRepository) {
         this.versionRepository = versionRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        stringFuelMap.put("GASOLINE", GASOLINE);
+        stringFuelMap.put("DIESEL", DIESEL);
+        stringFuelMap.put("NATURAL GAS", NATURAL_GAS);
+        stringFuelMap.put("HYBRID", HYBRID);
+        stringFuelMap.put("ETHANOL", ETHANOL);
+        stringFuelMap.put("ELECTRIC", ELECTRIC);
     }
 
     @Override
@@ -86,7 +98,7 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
                     version.setId(extractId(t.getRight()));
                     version.setName(extractName(t.getRight()));
                     version.setYears(t.getLeft());
-                    version.setFuel(t.getMiddle());
+                    version.setFuel(resolveFuel(t.getMiddle()));
 
                     return version;
                 })
@@ -124,5 +136,9 @@ public class VersionWebRepositoryImpl implements VersionWebRepository {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    private Fuel resolveFuel(String fuel) {
+        return stringFuelMap.getOrDefault(fuel, UNKNOWN);
     }
 }

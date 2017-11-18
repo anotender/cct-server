@@ -32,7 +32,8 @@ public class Version {
     @Column(nullable = false)
     private String years;
 
-    private String fuel;
+    @Enumerated(EnumType.STRING)
+    private Fuel fuel;
 
     private Double cityFuelConsumption;
 
