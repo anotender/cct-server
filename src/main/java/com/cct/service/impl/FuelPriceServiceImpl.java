@@ -54,7 +54,7 @@ public class FuelPriceServiceImpl implements FuelPriceService {
     private Optional<FuelPrice> findMostRecentFuelPrice(List<FuelPrice> fuelPrices) {
         return fuelPrices
                 .stream()
-                .sorted(Comparator.comparing(FuelPrice::getDate))
+                .sorted(Comparator.comparing(FuelPrice::getDate).reversed())
                 .findFirst();
     }
 

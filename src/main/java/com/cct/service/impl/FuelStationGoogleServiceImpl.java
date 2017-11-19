@@ -11,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,6 +85,6 @@ public class FuelStationGoogleServiceImpl implements FuelStationGoogleService {
         String id = o.getString("id");
         Double latitude = o.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
         Double longitude = o.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
-        return new FuelStationDTO(id, latitude, longitude, name, address, Collections.emptySet());
+        return new FuelStationDTO(id, latitude, longitude, name, address);
     }
 }

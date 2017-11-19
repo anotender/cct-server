@@ -2,7 +2,6 @@ package com.cct.util;
 
 import com.cct.model.*;
 import com.cct.model.dto.*;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -85,26 +84,6 @@ public class ModelMapper {
         return carDTO;
     }
 
-    public Make convertToEntity(MakeDTO makeDTO) {
-        Make make = new Make();
-
-        make.setId(makeDTO.getId());
-        make.setName(makeDTO.getName());
-        make.setLogoUrl(makeDTO.getLogoUrl());
-        make.setModels(makeDTO
-                .getModels()
-                .stream()
-                .map(id -> {
-                    Model m = new Model();
-                    m.setId(id);
-                    return m;
-                })
-                .collect(Collectors.toSet())
-        );
-
-        return make;
-    }
-
     public MakeDTO convertToDTO(Make make) {
         MakeDTO makeDTO = new MakeDTO();
 
@@ -119,31 +98,6 @@ public class ModelMapper {
         );
 
         return makeDTO;
-    }
-
-    public Model convertToEntity(ModelDTO modelDTO) {
-        Model model = new Model();
-
-        model.setId(modelDTO.getId());
-        model.setName(modelDTO.getName());
-        model.setBody(modelDTO.getBody());
-
-        Make make = new Make();
-        make.setId(modelDTO.getMakeId());
-        model.setMake(make);
-
-        model.setVersions(modelDTO
-                .getVersions()
-                .stream()
-                .map(id -> {
-                    Version v = new Version();
-                    v.setId(id);
-                    return v;
-                })
-                .collect(Collectors.toSet())
-        );
-
-        return model;
     }
 
     public ModelDTO convertToDTO(Model model) {
@@ -163,45 +117,6 @@ public class ModelMapper {
         return modelDTO;
     }
 
-    public Version convertToEntity(VersionDTO versionDTO) {
-        Version version = new Version();
-
-        version.setId(versionDTO.getId());
-        version.setName(versionDTO.getName());
-
-        Model model = new Model();
-        model.setId(versionDTO.getModelId());
-        version.setModel(model);
-
-        version.setFuel(Fuel.valueOf(versionDTO.getFuel()));
-        version.setYears(versionDTO.getYears());
-        version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
-        version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
-        version.setMixedFuelConsumption(versionDTO.getMixedFuelConsumption());
-        version.setCars(versionDTO
-                .getCars()
-                .stream()
-                .map(id -> {
-                    Car c = new Car();
-                    c.setId(id);
-                    return c;
-                })
-                .collect(Collectors.toSet())
-        );
-        version.setRatings(versionDTO
-                .getRatings()
-                .stream()
-                .map(id -> {
-                    Rating r = new Rating();
-                    r.setId(id);
-                    return r;
-                })
-                .collect(Collectors.toSet())
-        );
-
-        return version;
-    }
-
     public VersionDTO convertToDTO(Version version) {
         VersionDTO versionDTO = new VersionDTO();
 
@@ -213,6 +128,7 @@ public class ModelMapper {
         versionDTO.setCityFuelConsumption(version.getCityFuelConsumption());
         versionDTO.setHighwayFuelConsumption(version.getHighwayFuelConsumption());
         versionDTO.setMixedFuelConsumption(version.getMixedFuelConsumption());
+        versionDTO.setAverageFuelConsumption(version.getAverageFuelConsumption());
         versionDTO.setCars(version
                 .getCars()
                 .stream()
@@ -235,15 +151,11 @@ public class ModelMapper {
         fuelRefill.setId(fuelRefillDTO.getId());
         fuelRefill.setDistance(fuelRefillDTO.getDistance());
         fuelRefill.setLiters(fuelRefillDTO.getLiters());
-        fuelRefill.setDate(fuelRefillDTO.getDate());
+        fuelRefill.setDate(convertMillisToLocalDateTime(fuelRefillDTO.getDate()));
 
         Car car = new Car();
         car.setId(fuelRefillDTO.getCarId());
         fuelRefill.setCar(car);
-
-        if (StringUtils.isNotBlank(fuelRefillDTO.getFuelStationId())) {
-            fuelRefill.setFuelStationId(fuelRefillDTO.getFuelStationId());
-        }
 
         return fuelRefill;
     }
@@ -254,9 +166,8 @@ public class ModelMapper {
         fuelRefillDTO.setId(fuelRefill.getId());
         fuelRefillDTO.setDistance(fuelRefill.getDistance());
         fuelRefillDTO.setLiters(fuelRefill.getLiters());
-        fuelRefillDTO.setDate(fuelRefill.getDate());
+        fuelRefillDTO.setDate(convertLocalDateTimeToMillis(fuelRefill.getDate()));
         fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
-        fuelRefillDTO.setFuelStationId(fuelRefill.getFuelStationId());
 
         return fuelRefillDTO;
     }

@@ -41,4 +41,6 @@ public class Version {
 
     private Double mixedFuelConsumption;
 
+    private Double averageFuelConsumption;
+
 }

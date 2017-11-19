@@ -2,8 +2,10 @@ package com.cct.service.impl;
 
 import com.cct.exception.BadRequestException;
 import com.cct.model.FuelRefill;
+import com.cct.model.Version;
 import com.cct.model.dto.FuelRefillDTO;
 import com.cct.repository.api.FuelRefillRepository;
+import com.cct.repository.api.VersionRepository;
 import com.cct.service.api.FuelRefillService;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,12 @@ import static com.cct.exception.ErrorInfo.FUEL_REFILL_NOT_FOUND;
 public class FuelRefillServiceImpl implements FuelRefillService {
 
     private final FuelRefillRepository fuelRefillRepository;
+    private final VersionRepository versionRepository;
     private final ModelMapper modelMapper;
 
-    public FuelRefillServiceImpl(FuelRefillRepository fuelRefillRepository, ModelMapper modelMapper) {
+    public FuelRefillServiceImpl(FuelRefillRepository fuelRefillRepository, VersionRepository versionRepository, ModelMapper modelMapper) {
         this.fuelRefillRepository = fuelRefillRepository;
+        this.versionRepository = versionRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -44,17 +48,27 @@ public class FuelRefillServiceImpl implements FuelRefillService {
     }
 
     @Override
-    public Collection<FuelRefillDTO> getFuelRefillsForFuelStation(String id) {
-        return fuelRefillRepository
-                .findByFuelStationId(id)
-                .stream()
-                .map(modelMapper::convertToDTO)
-                .collect(Collectors.toSet());
+    public FuelRefillDTO save(FuelRefillDTO fuelRefillDTO) {
+        FuelRefill savedFuelRefill = fuelRefillRepository.save(modelMapper.convertToEntity(fuelRefillDTO));
+        versionRepository
+                .findOneByCarId(savedFuelRefill.getCar().getId())
+                .ifPresent(this::updateVersionAverageFuelConsumption);
+        return modelMapper.convertToDTO(savedFuelRefill);
     }
 
-    @Override
-    public FuelRefillDTO save(FuelRefillDTO fuelRefillDTO) {
-        FuelRefill fuelRefill = modelMapper.convertToEntity(fuelRefillDTO);
-        return modelMapper.convertToDTO(fuelRefillRepository.save(fuelRefill));
+    private void updateVersionAverageFuelConsumption(Version v) {
+        Collection<FuelRefill> fuelRefills = fuelRefillRepository.findByVersionId(v.getId());
+
+        double totalDistance = fuelRefills
+                .stream()
+                .mapToDouble(FuelRefill::getDistance)
+                .sum();
+
+        double totalLiters = fuelRefills
+                .stream()
+                .mapToDouble(FuelRefill::getLiters)
+                .sum();
+
+        v.setAverageFuelConsumption(totalLiters * 100 / totalDistance);
     }
 }

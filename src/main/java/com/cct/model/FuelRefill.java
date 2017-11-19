@@ -31,6 +31,4 @@ public class FuelRefill {
     @OneToOne(fetch = LAZY)
     @JoinColumn
     private FuelPrice fuelPrice;
-
-    private String fuelStationId;
 }
