@@ -6,7 +6,9 @@ import lombok.Data;
 public class FuelRefillDTO {
     private Long id;
     private Long carId;
+    private Long fuelPriceId;
     private Double liters;
-    private Long date;
     private Double distance;
+    private Double averageFuelConsumption;
+    private Long date;
 }

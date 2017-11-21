@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface VersionRepository extends JpaRepository<Version, String> {
     Optional<Version> findOneById(String id);
 
-    @Query("select c.version from Car c where c.id=?1")
-    Optional<Version> findOneByCarId(Long id);
+    @Query("select c.version from Car c where c.id = :carId")
+    Optional<Version> findOneByCarId(@Param("carId") Long carId);
 
     @Query("select v from Version v where v.model.id = :modelId order by v.name asc")
     Collection<Version> findByModelId(@Param("modelId") String modelId);

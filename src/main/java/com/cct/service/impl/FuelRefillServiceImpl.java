@@ -49,16 +49,27 @@ public class FuelRefillServiceImpl implements FuelRefillService {
 
     @Override
     public FuelRefillDTO save(FuelRefillDTO fuelRefillDTO) {
-        FuelRefill savedFuelRefill = fuelRefillRepository.save(modelMapper.convertToEntity(fuelRefillDTO));
+        FuelRefill fuelRefill = modelMapper.convertToEntity(fuelRefillDTO);
+        fuelRefill.setAverageFuelConsumption(countAverageFuelConsumption(fuelRefill));
+        FuelRefill savedFuelRefill = fuelRefillRepository.save(fuelRefill);
+
         versionRepository
                 .findOneByCarId(savedFuelRefill.getCar().getId())
                 .ifPresent(this::updateVersionAverageFuelConsumption);
+
         return modelMapper.convertToDTO(savedFuelRefill);
     }
 
     private void updateVersionAverageFuelConsumption(Version v) {
         Collection<FuelRefill> fuelRefills = fuelRefillRepository.findByVersionId(v.getId());
+        v.setAverageFuelConsumption(countAverageFuelConsumption(fuelRefills));
+    }
 
+    private double countAverageFuelConsumption(FuelRefill fuelRefill) {
+        return fuelRefill.getLiters() * 100 / fuelRefill.getDistance();
+    }
+
+    private double countAverageFuelConsumption(Collection<FuelRefill> fuelRefills) {
         double totalDistance = fuelRefills
                 .stream()
                 .mapToDouble(FuelRefill::getDistance)
@@ -69,6 +80,6 @@ public class FuelRefillServiceImpl implements FuelRefillService {
                 .mapToDouble(FuelRefill::getLiters)
                 .sum();
 
-        v.setAverageFuelConsumption(totalLiters * 100 / totalDistance);
+        return totalLiters * 100 / totalDistance;
     }
 }

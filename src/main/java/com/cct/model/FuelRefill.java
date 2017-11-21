@@ -22,6 +22,9 @@ public class FuelRefill {
     private Double distance;
 
     @Column(nullable = false)
+    private Double averageFuelConsumption;
+
+    @Column(nullable = false)
     private LocalDateTime date;
 
     @ManyToOne(fetch = LAZY)

@@ -151,11 +151,18 @@ public class ModelMapper {
         fuelRefill.setId(fuelRefillDTO.getId());
         fuelRefill.setDistance(fuelRefillDTO.getDistance());
         fuelRefill.setLiters(fuelRefillDTO.getLiters());
+        fuelRefill.setAverageFuelConsumption(fuelRefillDTO.getAverageFuelConsumption());
         fuelRefill.setDate(convertMillisToLocalDateTime(fuelRefillDTO.getDate()));
 
         Car car = new Car();
         car.setId(fuelRefillDTO.getCarId());
         fuelRefill.setCar(car);
+
+        if (fuelRefillDTO.getFuelPriceId() != null) {
+            FuelPrice fuelPrice = new FuelPrice();
+            fuelPrice.setId(fuelRefillDTO.getFuelPriceId());
+            fuelRefill.setFuelPrice(fuelPrice);
+        }
 
         return fuelRefill;
     }
@@ -166,8 +173,12 @@ public class ModelMapper {
         fuelRefillDTO.setId(fuelRefill.getId());
         fuelRefillDTO.setDistance(fuelRefill.getDistance());
         fuelRefillDTO.setLiters(fuelRefill.getLiters());
+        fuelRefillDTO.setAverageFuelConsumption(fuelRefill.getAverageFuelConsumption());
         fuelRefillDTO.setDate(convertLocalDateTimeToMillis(fuelRefill.getDate()));
         fuelRefillDTO.setCarId(fuelRefill.getCar().getId());
+        if (fuelRefill.getFuelPrice() != null) {
+            fuelRefillDTO.setFuelPriceId(fuelRefill.getFuelPrice().getId());
+        }
 
         return fuelRefillDTO;
     }
