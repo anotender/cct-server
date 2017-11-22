@@ -35,4 +35,10 @@ public class FuelRefillController {
                 .toUri();
         return ResponseEntity.created(location).body(savedFuelRefillDTO);
     }
+
+    @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteFuelRefill(@PathVariable("id") Long id) {
+        fuelRefillService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

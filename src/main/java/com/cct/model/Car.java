@@ -18,11 +18,11 @@ public class Car {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private Version version;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private User user;
 
     @Column(nullable = false)

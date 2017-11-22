@@ -10,4 +10,6 @@ public interface FuelRefillService {
     Collection<FuelRefillDTO> getFuelRefillsForCar(Long id);
 
     FuelRefillDTO save(FuelRefillDTO fuelRefillDTO);
+
+    void delete(Long id);
 }

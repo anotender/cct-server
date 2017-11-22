@@ -30,6 +30,7 @@ public class CarServiceImpl implements CarService {
     public CarDTO getCar(Long id) {
         return carRepository
                 .findOneById(id)
+                .filter(c -> c.getUser() != null)
                 .map(modelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(CAR_NOT_FOUND));
     }
@@ -47,5 +48,13 @@ public class CarServiceImpl implements CarService {
     public CarDTO save(CarDTO carDTO) {
         Car car = modelMapper.convertToEntity(carDTO);
         return modelMapper.convertToDTO(carRepository.save(car));
+    }
+
+    @Override
+    public void unbindUserFromCarAndVersion(Long id) {
+        carRepository.findOneById(id).ifPresent(c -> {
+            c.setUser(null);
+            c.setVersion(null);
+        });
     }
 }

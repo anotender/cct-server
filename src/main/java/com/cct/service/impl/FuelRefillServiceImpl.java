@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.cct.exception.ErrorInfo.FUEL_REFILL_NOT_FOUND;
+import static com.cct.util.FuelRefillUtils.countAverageFuelConsumption;
 
 @Service
 @Transactional
@@ -60,26 +62,16 @@ public class FuelRefillServiceImpl implements FuelRefillService {
         return modelMapper.convertToDTO(savedFuelRefill);
     }
 
+    @Override
+    public void delete(Long id) {
+        Optional<Version> version = versionRepository.findOneByFuelRefillId(id);
+        fuelRefillRepository.delete(id);
+        version.ifPresent(this::updateVersionAverageFuelConsumption);
+    }
+
     private void updateVersionAverageFuelConsumption(Version v) {
         Collection<FuelRefill> fuelRefills = fuelRefillRepository.findByVersionId(v.getId());
         v.setAverageFuelConsumption(countAverageFuelConsumption(fuelRefills));
     }
 
-    private double countAverageFuelConsumption(FuelRefill fuelRefill) {
-        return fuelRefill.getLiters() * 100 / fuelRefill.getDistance();
-    }
-
-    private double countAverageFuelConsumption(Collection<FuelRefill> fuelRefills) {
-        double totalDistance = fuelRefills
-                .stream()
-                .mapToDouble(FuelRefill::getDistance)
-                .sum();
-
-        double totalLiters = fuelRefills
-                .stream()
-                .mapToDouble(FuelRefill::getLiters)
-                .sum();
-
-        return totalLiters * 100 / totalDistance;
-    }
 }

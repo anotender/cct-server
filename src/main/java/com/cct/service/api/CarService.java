@@ -10,4 +10,6 @@ public interface CarService {
     Collection<CarDTO> getCarsForUser(Long userId);
 
     CarDTO save(CarDTO carDTO);
+
+    void unbindUserFromCarAndVersion(Long id);
 }

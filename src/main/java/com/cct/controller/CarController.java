@@ -46,5 +46,10 @@ public class CarController {
         return ResponseEntity.created(location).body(savedCarDTO);
     }
 
+    @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> unbindUserFromCar(@PathVariable("id") Long id) {
+        carService.unbindUserFromCarAndVersion(id);
+        return ResponseEntity.ok().build();
+    }
 
 }
