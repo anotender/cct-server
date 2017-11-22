@@ -48,7 +48,7 @@ public class CarController {
 
     @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> unbindUserFromCar(@PathVariable("id") Long id) {
-        carService.unbindUserFromCarAndVersion(id);
+        carService.unbindUserAndVersionFromCar(id);
         return ResponseEntity.ok().build();
     }
 

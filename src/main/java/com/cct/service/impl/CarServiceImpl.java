@@ -51,7 +51,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void unbindUserFromCarAndVersion(Long id) {
+    public void unbindUserAndVersionFromCar(Long id) {
         carRepository.findOneById(id).ifPresent(c -> {
             c.setUser(null);
             c.setVersion(null);

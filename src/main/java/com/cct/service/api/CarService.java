@@ -11,5 +11,5 @@ public interface CarService {
 
     CarDTO save(CarDTO carDTO);
 
-    void unbindUserFromCarAndVersion(Long id);
+    void unbindUserAndVersionFromCar(Long id);
 }
