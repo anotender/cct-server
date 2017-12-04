@@ -30,4 +30,7 @@ public class Car {
 
     @OneToMany(fetch = LAZY, mappedBy = "car")
     private Set<FuelRefill> fuelRefills = new HashSet<>();
+
+    @OneToMany(fetch = LAZY, mappedBy = "car")
+    private Set<CarEvent> carEvents = new HashSet<>();
 }
