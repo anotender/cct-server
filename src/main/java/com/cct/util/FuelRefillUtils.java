@@ -4,7 +4,7 @@ import com.cct.model.FuelRefill;
 
 import java.util.Collection;
 
-public class FuelRefillUtils {
+public final class FuelRefillUtils {
 
     private FuelRefillUtils() {
     }

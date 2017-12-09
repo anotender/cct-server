@@ -6,7 +6,7 @@ import com.cct.model.Version;
 import com.cct.model.dto.VersionDTO;
 import com.cct.repository.api.ModelRepository;
 import com.cct.repository.api.VersionRepository;
-import com.cct.repository.api.VersionWebRepository;
+import com.cct.service.api.VersionAutoEvolutionService;
 import com.cct.service.api.VersionService;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,13 +26,13 @@ public class VersionServiceImpl implements VersionService {
 
     private final ModelRepository modelRepository;
     private final VersionRepository versionRepository;
-    private final VersionWebRepository versionWebRepository;
+    private final VersionAutoEvolutionService versionAutoEvolutionService;
     private final ModelMapper modelMapper;
 
-    public VersionServiceImpl(ModelRepository modelRepository, VersionRepository versionRepository, VersionWebRepository versionWebRepository, ModelMapper modelMapper) {
+    public VersionServiceImpl(ModelRepository modelRepository, VersionRepository versionRepository, VersionAutoEvolutionService versionAutoEvolutionService, ModelMapper modelMapper) {
         this.modelRepository = modelRepository;
         this.versionRepository = versionRepository;
-        this.versionWebRepository = versionWebRepository;
+        this.versionAutoEvolutionService = versionAutoEvolutionService;
         this.modelMapper = modelMapper;
     }
 
@@ -41,7 +41,7 @@ public class VersionServiceImpl implements VersionService {
         Optional<Version> version = versionRepository.findOneById(versionId);
 
         if (version.isPresent() && !isFullyFetched(version.get())) {
-            versionWebRepository.fetchData(version.get());
+            versionAutoEvolutionService.fetchData(version.get().getId());
         }
 
         return version
@@ -87,9 +87,10 @@ public class VersionServiceImpl implements VersionService {
             Model model = modelRepository
                     .findOneById(modelId)
                     .orElseThrow(() -> new BadRequestException(MODEL_NOT_FOUND));
-            versions = versionWebRepository
-                    .findByMakeIdAndModelId(model.getMake().getId(), modelId)
+            versions = versionAutoEvolutionService
+                    .getVersionsForMakeAndModel(model.getMake().getId(), modelId)
                     .stream()
+                    .map(modelMapper::convertToEntity)
                     .peek(v -> v.setModel(model))
                     .sorted(Comparator.comparing(Version::getYears))
                     .collect(Collectors.toList());

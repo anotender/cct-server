@@ -11,7 +11,7 @@ import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 @Component
-public class ModelMapper {
+public final class ModelMapper {
 
     public User convertToEntity(UserDTO userDTO) {
         User user = new User();
@@ -115,6 +115,46 @@ public class ModelMapper {
         );
 
         return modelDTO;
+    }
+
+    public Version convertToEntity(VersionDTO versionDTO) {
+        Version version = new Version();
+
+        version.setId(versionDTO.getId());
+        version.setName(versionDTO.getName());
+
+        Model model = new Model();
+        model.setId(versionDTO.getModelId());
+        version.setModel(model);
+
+        version.setFuel(Fuel.valueOf(versionDTO.getFuel()));
+        version.setYears(versionDTO.getYears());
+        version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
+        version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
+        version.setMixedFuelConsumption(versionDTO.getMixedFuelConsumption());
+        version.setAverageFuelConsumption(versionDTO.getAverageFuelConsumption());
+        version.setCars(versionDTO
+                .getCars()
+                .stream()
+                .map(carId -> {
+                    Car car = new Car();
+                    car.setId(carId);
+                    return car;
+                })
+                .collect(Collectors.toSet())
+        );
+        version.setRatings(versionDTO
+                .getRatings()
+                .stream()
+                .map(ratingId -> {
+                    Rating rating = new Rating();
+                    rating.setId(ratingId);
+                    return rating;
+                })
+                .collect(Collectors.toSet())
+        );
+
+        return version;
     }
 
     public VersionDTO convertToDTO(Version version) {
