@@ -17,11 +17,9 @@ import static com.cct.exception.ErrorInfo.MODEL_NOT_FOUND;
 @Transactional
 public class ModelServiceImpl implements ModelService {
     private final ModelRepository modelRepository;
-    private final ModelMapper modelMapper;
 
-    public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper) {
+    public ModelServiceImpl(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -29,7 +27,7 @@ public class ModelServiceImpl implements ModelService {
         return modelRepository
                 .findAll()
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
@@ -38,7 +36,7 @@ public class ModelServiceImpl implements ModelService {
         return modelRepository
                 .findByIdIn(ids)
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
@@ -47,7 +45,7 @@ public class ModelServiceImpl implements ModelService {
         return modelRepository
                 .findByMakeIdOrderByName(id)
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +53,7 @@ public class ModelServiceImpl implements ModelService {
     public ModelDTO getModel(String id) {
         return modelRepository
                 .findOneById(id)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(MODEL_NOT_FOUND));
     }
 }

@@ -2,7 +2,6 @@ package com.cct.util;
 
 import com.cct.model.*;
 import com.cct.model.dto.*;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -10,10 +9,12 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
-@Component
 public final class ModelMapper {
 
-    public User convertToEntity(UserDTO userDTO) {
+    private ModelMapper() {
+    }
+
+    public static User convertToEntity(UserDTO userDTO) {
         User user = new User();
 
         user.setId(userDTO.getId());
@@ -22,20 +23,20 @@ public final class ModelMapper {
         user.setCars(userDTO
                 .getCars()
                 .stream()
-                .map(this::convertToEntity)
+                .map(ModelMapper::convertToEntity)
                 .collect(Collectors.toSet())
         );
         user.setRatings(userDTO
                 .getRatings()
                 .stream()
-                .map(this::convertToEntity)
+                .map(ModelMapper::convertToEntity)
                 .collect(Collectors.toSet())
         );
 
         return user;
     }
 
-    public UserDTO convertToDTO(User user) {
+    public static UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
@@ -43,37 +44,31 @@ public final class ModelMapper {
         userDTO.setCars(user
                 .getCars()
                 .stream()
-                .map(this::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet())
         );
         userDTO.setRatings(user
                 .getRatings()
                 .stream()
-                .map(this::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet())
         );
 
         return userDTO;
     }
 
-    public Car convertToEntity(CarDTO carDTO) {
+    public static Car convertToEntity(CarDTO carDTO) {
         Car car = new Car();
 
         car.setId(carDTO.getId());
         car.setName(carDTO.getName());
-
-        Version version = new Version();
-        version.setId(carDTO.getVersionId());
-        car.setVersion(version);
-
-        User user = new User();
-        user.setId(carDTO.getUserId());
-        car.setUser(user);
+        car.setVersion(new Version(carDTO.getVersionId()));
+        car.setUser(new User(carDTO.getUserId()));
 
         return car;
     }
 
-    public CarDTO convertToDTO(Car car) {
+    public static CarDTO convertToDTO(Car car) {
         CarDTO carDTO = new CarDTO();
 
         carDTO.setId(car.getId());
@@ -84,7 +79,7 @@ public final class ModelMapper {
         return carDTO;
     }
 
-    public MakeDTO convertToDTO(Make make) {
+    public static MakeDTO convertToDTO(Make make) {
         MakeDTO makeDTO = new MakeDTO();
 
         makeDTO.setId(make.getId());
@@ -100,7 +95,7 @@ public final class ModelMapper {
         return makeDTO;
     }
 
-    public ModelDTO convertToDTO(Model model) {
+    public static ModelDTO convertToDTO(Model model) {
         ModelDTO modelDTO = new ModelDTO();
 
         modelDTO.setId(model.getId());
@@ -117,16 +112,12 @@ public final class ModelMapper {
         return modelDTO;
     }
 
-    public Version convertToEntity(VersionDTO versionDTO) {
+    public static Version convertToEntity(VersionDTO versionDTO) {
         Version version = new Version();
 
         version.setId(versionDTO.getId());
         version.setName(versionDTO.getName());
-
-        Model model = new Model();
-        model.setId(versionDTO.getModelId());
-        version.setModel(model);
-
+        version.setModel(new Model(versionDTO.getModelId()));
         version.setFuel(Fuel.valueOf(versionDTO.getFuel()));
         version.setYears(versionDTO.getYears());
         version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
@@ -136,28 +127,20 @@ public final class ModelMapper {
         version.setCars(versionDTO
                 .getCars()
                 .stream()
-                .map(carId -> {
-                    Car car = new Car();
-                    car.setId(carId);
-                    return car;
-                })
+                .map(Car::new)
                 .collect(Collectors.toSet())
         );
         version.setRatings(versionDTO
                 .getRatings()
                 .stream()
-                .map(ratingId -> {
-                    Rating rating = new Rating();
-                    rating.setId(ratingId);
-                    return rating;
-                })
+                .map(Rating::new)
                 .collect(Collectors.toSet())
         );
 
         return version;
     }
 
-    public VersionDTO convertToDTO(Version version) {
+    public static VersionDTO convertToDTO(Version version) {
         VersionDTO versionDTO = new VersionDTO();
 
         versionDTO.setId(version.getId());
@@ -185,7 +168,7 @@ public final class ModelMapper {
         return versionDTO;
     }
 
-    public FuelRefill convertToEntity(FuelRefillDTO fuelRefillDTO) {
+    public static FuelRefill convertToEntity(FuelRefillDTO fuelRefillDTO) {
         FuelRefill fuelRefill = new FuelRefill();
 
         fuelRefill.setId(fuelRefillDTO.getId());
@@ -193,21 +176,16 @@ public final class ModelMapper {
         fuelRefill.setLiters(fuelRefillDTO.getLiters());
         fuelRefill.setAverageFuelConsumption(fuelRefillDTO.getAverageFuelConsumption());
         fuelRefill.setDate(convertMillisToLocalDateTime(fuelRefillDTO.getDate()));
-
-        Car car = new Car();
-        car.setId(fuelRefillDTO.getCarId());
-        fuelRefill.setCar(car);
+        fuelRefill.setCar(new Car(fuelRefillDTO.getCarId()));
 
         if (fuelRefillDTO.getFuelPriceId() != null) {
-            FuelPrice fuelPrice = new FuelPrice();
-            fuelPrice.setId(fuelRefillDTO.getFuelPriceId());
-            fuelRefill.setFuelPrice(fuelPrice);
+            fuelRefill.setFuelPrice(new FuelPrice(fuelRefillDTO.getFuelPriceId()));
         }
 
         return fuelRefill;
     }
 
-    public FuelRefillDTO convertToDTO(FuelRefill fuelRefill) {
+    public static FuelRefillDTO convertToDTO(FuelRefill fuelRefill) {
         FuelRefillDTO fuelRefillDTO = new FuelRefillDTO();
 
         fuelRefillDTO.setId(fuelRefill.getId());
@@ -223,26 +201,20 @@ public final class ModelMapper {
         return fuelRefillDTO;
     }
 
-    public Rating convertToEntity(RatingDTO ratingDTO) {
+    public static Rating convertToEntity(RatingDTO ratingDTO) {
         Rating rating = new Rating();
 
         rating.setId(ratingDTO.getId());
         rating.setComment(ratingDTO.getComment());
         rating.setPoints(ratingDTO.getPoints());
         rating.setDate(convertMillisToLocalDateTime(ratingDTO.getDate()));
-
-        Version version = new Version();
-        version.setId(ratingDTO.getVersionId());
-        rating.setVersion(version);
-
-        User user = new User();
-        user.setId(ratingDTO.getUserId());
-        rating.setUser(user);
+        rating.setVersion(new Version(ratingDTO.getVersionId()));
+        rating.setUser(new User(ratingDTO.getUserId()));
 
         return rating;
     }
 
-    public RatingDTO convertToDTO(Rating rating) {
+    public static RatingDTO convertToDTO(Rating rating) {
         RatingDTO ratingDTO = new RatingDTO();
 
         ratingDTO.setId(rating.getId());
@@ -255,7 +227,7 @@ public final class ModelMapper {
         return ratingDTO;
     }
 
-    public FuelPrice convertToEntity(FuelPriceDTO fuelPriceDTO) {
+    public static FuelPrice convertToEntity(FuelPriceDTO fuelPriceDTO) {
         FuelPrice fuelPrice = new FuelPrice();
 
         fuelPrice.setId(fuelPriceDTO.getId());
@@ -267,7 +239,7 @@ public final class ModelMapper {
         return fuelPrice;
     }
 
-    public FuelPriceDTO convertToDTO(FuelPrice fuelPrice) {
+    public static FuelPriceDTO convertToDTO(FuelPrice fuelPrice) {
         FuelPriceDTO fuelPriceDTO = new FuelPriceDTO();
 
         fuelPriceDTO.setId(fuelPrice.getId());
@@ -279,11 +251,11 @@ public final class ModelMapper {
         return fuelPriceDTO;
     }
 
-    private Long convertLocalDateTimeToMillis(LocalDateTime date) {
+    private static Long convertLocalDateTimeToMillis(LocalDateTime date) {
         return date.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
     }
 
-    private LocalDateTime convertMillisToLocalDateTime(Long millis) {
+    private static LocalDateTime convertMillisToLocalDateTime(Long millis) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
     }
 }

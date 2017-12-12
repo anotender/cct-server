@@ -24,19 +24,17 @@ public class FuelRefillServiceImpl implements FuelRefillService {
 
     private final FuelRefillRepository fuelRefillRepository;
     private final VersionRepository versionRepository;
-    private final ModelMapper modelMapper;
 
-    public FuelRefillServiceImpl(FuelRefillRepository fuelRefillRepository, VersionRepository versionRepository, ModelMapper modelMapper) {
+    public FuelRefillServiceImpl(FuelRefillRepository fuelRefillRepository, VersionRepository versionRepository) {
         this.fuelRefillRepository = fuelRefillRepository;
         this.versionRepository = versionRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
     public FuelRefillDTO getFuelRefill(Long id) {
         return fuelRefillRepository
                 .findOneById(id)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(FUEL_REFILL_NOT_FOUND));
     }
 
@@ -45,13 +43,13 @@ public class FuelRefillServiceImpl implements FuelRefillService {
         return fuelRefillRepository
                 .findByCarId(id)
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public FuelRefillDTO save(FuelRefillDTO fuelRefillDTO) {
-        FuelRefill fuelRefill = modelMapper.convertToEntity(fuelRefillDTO);
+        FuelRefill fuelRefill = ModelMapper.convertToEntity(fuelRefillDTO);
         fuelRefill.setAverageFuelConsumption(countAverageFuelConsumption(fuelRefill));
         FuelRefill savedFuelRefill = fuelRefillRepository.save(fuelRefill);
 
@@ -59,7 +57,7 @@ public class FuelRefillServiceImpl implements FuelRefillService {
                 .findOneByCarId(savedFuelRefill.getCar().getId())
                 .ifPresent(this::updateVersionAverageFuelConsumption);
 
-        return modelMapper.convertToDTO(savedFuelRefill);
+        return ModelMapper.convertToDTO(savedFuelRefill);
     }
 
     @Override

@@ -17,18 +17,16 @@ import static com.cct.exception.ErrorInfo.RATING_NOT_FOUND;
 public class RatingServiceImpl implements RatingService {
 
     private final RatingRepository ratingRepository;
-    private final ModelMapper modelMapper;
 
-    public RatingServiceImpl(RatingRepository ratingRepository, ModelMapper modelMapper) {
+    public RatingServiceImpl(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
     public RatingDTO getRating(Long id) {
         return ratingRepository
                 .findOneById(id)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(RATING_NOT_FOUND));
     }
 
@@ -37,13 +35,13 @@ public class RatingServiceImpl implements RatingService {
         return ratingRepository
                 .findByVersionId(id)
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public RatingDTO save(RatingDTO ratingDTO) {
-        Rating rating = modelMapper.convertToEntity(ratingDTO);
-        return modelMapper.convertToDTO(ratingRepository.save(rating));
+        Rating rating = ModelMapper.convertToEntity(ratingDTO);
+        return ModelMapper.convertToDTO(ratingRepository.save(rating));
     }
 }

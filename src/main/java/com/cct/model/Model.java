@@ -30,4 +30,8 @@ public class Model {
 
     @OneToMany(fetch = LAZY, mappedBy = "model")
     private Set<Version> versions = new HashSet<>();
+
+    public Model(String id) {
+        this.id = id;
+    }
 }

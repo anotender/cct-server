@@ -2,6 +2,7 @@ package com.cct.configuration.security.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -13,10 +14,20 @@ import java.util.Date;
 
 @Service
 public class TokenAuthenticationService {
-    private final long expirationTime = 864_000_000; // 10 days
-    private final String secret = "ThisIsASecret";
-    private final String prefix = "Bearer";
-    private final String header = "Authorization";
+    private final long expirationTime;
+    private final String secret;
+    private final String prefix;
+    private final String header;
+
+    public TokenAuthenticationService(
+            @Value("#{new Long('${security.token.expiration-time}')}") Long expirationTime,
+            @Value("${security.token.secret}") String secret
+    ) {
+        this.expirationTime = expirationTime;
+        this.secret = secret;
+        this.prefix = "Bearer";
+        this.header = "Authorization";
+    }
 
     public void addAuthentication(HttpServletResponse res, String username) {
         String token = Jwts.builder()

@@ -18,18 +18,16 @@ import static com.cct.exception.ErrorInfo.MAKE_NOT_FOUND;
 public class MakeServiceImpl implements MakeService {
 
     private final MakeRepository makeRepository;
-    private final ModelMapper modelMapper;
 
-    public MakeServiceImpl(MakeRepository makeRepository, ModelMapper modelMapper) {
+    public MakeServiceImpl(MakeRepository makeRepository) {
         this.makeRepository = makeRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
     public MakeDTO getMake(String id) {
         return makeRepository
                 .findOneById(id)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(MAKE_NOT_FOUND));
     }
 
@@ -38,7 +36,7 @@ public class MakeServiceImpl implements MakeService {
         return makeRepository
                 .findAll()
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package com.cct.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"fuelRefills"})
 public class Car {
     @Id
@@ -33,4 +35,8 @@ public class Car {
 
     @OneToMany(fetch = LAZY, mappedBy = "car")
     private Set<CarEvent> carEvents = new HashSet<>();
+
+    public Car(Long id) {
+        this.id = id;
+    }
 }

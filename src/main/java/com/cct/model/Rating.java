@@ -1,6 +1,7 @@
 package com.cct.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Rating {
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -33,4 +35,8 @@ public class Rating {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(nullable = false)
     private User user;
+
+    public Rating(Long id) {
+        this.id = id;
+    }
 }

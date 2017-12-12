@@ -20,12 +20,10 @@ import static com.cct.exception.ErrorInfo.USER_NOT_FOUND;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(Long id) {
         return userRepository
                 .findOneById(id)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
     }
 
@@ -41,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(String email) {
         return userRepository
                 .findOneByEmail(email)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
     }
 
@@ -50,14 +48,14 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findAll()
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public UserDTO save(UserDTO userDTO) {
-        User user = modelMapper.convertToEntity(userDTO);
+        User user = ModelMapper.convertToEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return modelMapper.convertToDTO(userRepository.save(user));
+        return ModelMapper.convertToDTO(userRepository.save(user));
     }
 }

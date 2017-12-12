@@ -19,11 +19,9 @@ import static com.cct.exception.ErrorInfo.CAR_NOT_FOUND;
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
-    private final ModelMapper modelMapper;
 
-    public CarServiceImpl(CarRepository carRepository, ModelMapper modelMapper) {
+    public CarServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class CarServiceImpl implements CarService {
         return carRepository
                 .findOneById(id)
                 .filter(c -> c.getUser() != null)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(CAR_NOT_FOUND));
     }
 
@@ -40,14 +38,14 @@ public class CarServiceImpl implements CarService {
         return carRepository
                 .findByUserId(userId)
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public CarDTO save(CarDTO carDTO) {
-        Car car = modelMapper.convertToEntity(carDTO);
-        return modelMapper.convertToDTO(carRepository.save(car));
+        Car car = ModelMapper.convertToEntity(carDTO);
+        return ModelMapper.convertToDTO(carRepository.save(car));
     }
 
     @Override

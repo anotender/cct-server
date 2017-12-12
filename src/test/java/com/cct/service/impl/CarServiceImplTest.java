@@ -7,7 +7,6 @@ import com.cct.model.Version;
 import com.cct.model.dto.CarDTO;
 import com.cct.repository.api.CarRepository;
 import com.cct.service.api.CarService;
-import com.cct.util.ModelMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +23,8 @@ import java.util.Set;
 
 import static com.cct.exception.ErrorInfo.CAR_NOT_FOUND;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -33,9 +33,6 @@ public class CarServiceImplTest {
 
     @MockBean
     private CarRepository carRepository;
-
-    @MockBean
-    private ModelMapper modelMapper;
 
     @Autowired
     private CarService carService;
@@ -85,7 +82,6 @@ public class CarServiceImplTest {
     public void getCar_CarExists_CarDTOReturned() throws Exception {
         //when
         when(carRepository.findOneById(1L)).thenReturn(Optional.of(car1));
-        when(modelMapper.convertToDTO(car1)).thenReturn(carDTO1);
 
         //then
         CarDTO result = carService.getCar(1L);
@@ -110,15 +106,11 @@ public class CarServiceImplTest {
         cars.add(car1);
         cars.add(car2);
         when(carRepository.findByUserId(1L)).thenReturn(cars);
-        when(modelMapper.convertToDTO(car1)).thenReturn(carDTO1);
-        when(modelMapper.convertToDTO(car2)).thenReturn(carDTO2);
 
         //then
         Collection<CarDTO> carDTOs = carService.getCarsForUser(1L);
         assertThat(carDTOs, instanceOf(Set.class));
         assertEquals(2, carDTOs.size());
-        assertTrue(carDTOs.contains(carDTO1));
-        assertTrue(carDTOs.contains(carDTO2));
     }
 
 }

@@ -1,12 +1,14 @@
 package com.cct.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class FuelPrice {
 
     @Id
@@ -25,4 +27,8 @@ public class FuelPrice {
 
     @Column(nullable = false)
     private String fuelStationId;
+
+    public FuelPrice(Long id) {
+        this.id = id;
+    }
 }

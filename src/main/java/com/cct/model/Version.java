@@ -2,6 +2,7 @@ package com.cct.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"model", "cars", "ratings"})
 public class Version {
     @Id
@@ -42,5 +44,9 @@ public class Version {
     private Double mixedFuelConsumption;
 
     private Double averageFuelConsumption;
+
+    public Version(String id) {
+        this.id = id;
+    }
 
 }

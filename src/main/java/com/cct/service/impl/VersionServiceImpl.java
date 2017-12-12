@@ -27,13 +27,11 @@ public class VersionServiceImpl implements VersionService {
     private final ModelRepository modelRepository;
     private final VersionRepository versionRepository;
     private final VersionAutoEvolutionService versionAutoEvolutionService;
-    private final ModelMapper modelMapper;
 
-    public VersionServiceImpl(ModelRepository modelRepository, VersionRepository versionRepository, VersionAutoEvolutionService versionAutoEvolutionService, ModelMapper modelMapper) {
+    public VersionServiceImpl(ModelRepository modelRepository, VersionRepository versionRepository, VersionAutoEvolutionService versionAutoEvolutionService) {
         this.modelRepository = modelRepository;
         this.versionRepository = versionRepository;
         this.versionAutoEvolutionService = versionAutoEvolutionService;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -45,7 +43,7 @@ public class VersionServiceImpl implements VersionService {
         }
 
         return version
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .orElseThrow(() -> new BadRequestException(VERSION_NOT_FOUND));
     }
 
@@ -54,7 +52,7 @@ public class VersionServiceImpl implements VersionService {
         return versionRepository
                 .findAll()
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +88,7 @@ public class VersionServiceImpl implements VersionService {
             versions = versionAutoEvolutionService
                     .getVersionsForMakeAndModel(model.getMake().getId(), modelId)
                     .stream()
-                    .map(modelMapper::convertToEntity)
+                    .map(ModelMapper::convertToEntity)
                     .peek(v -> v.setModel(model))
                     .sorted(Comparator.comparing(Version::getYears))
                     .collect(Collectors.toList());
@@ -99,7 +97,7 @@ public class VersionServiceImpl implements VersionService {
 
         return versions
                 .stream()
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 

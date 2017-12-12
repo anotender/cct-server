@@ -14,11 +14,9 @@ import java.util.stream.Collectors;
 public class FuelPriceServiceImpl implements FuelPriceService {
 
     private final FuelPriceRepository fuelPriceRepository;
-    private final ModelMapper modelMapper;
 
-    public FuelPriceServiceImpl(FuelPriceRepository fuelPriceRepository, ModelMapper modelMapper) {
+    public FuelPriceServiceImpl(FuelPriceRepository fuelPriceRepository) {
         this.fuelPriceRepository = fuelPriceRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -33,7 +31,7 @@ public class FuelPriceServiceImpl implements FuelPriceService {
                 .map(this::findMostRecentFuelPrice)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(modelMapper::convertToDTO)
+                .map(ModelMapper::convertToDTO)
                 .collect(Collectors.toSet());
     }
 
@@ -47,8 +45,8 @@ public class FuelPriceServiceImpl implements FuelPriceService {
 
     @Override
     public FuelPriceDTO save(FuelPriceDTO fuelPriceDTO) {
-        FuelPrice savedFuelPrice = fuelPriceRepository.save(modelMapper.convertToEntity(fuelPriceDTO));
-        return modelMapper.convertToDTO(savedFuelPrice);
+        FuelPrice savedFuelPrice = fuelPriceRepository.save(ModelMapper.convertToEntity(fuelPriceDTO));
+        return ModelMapper.convertToDTO(savedFuelPrice);
     }
 
     private Optional<FuelPrice> findMostRecentFuelPrice(List<FuelPrice> fuelPrices) {
