@@ -8,6 +8,7 @@ import com.cct.repository.api.ModelRepository;
 import com.cct.repository.api.VersionRepository;
 import com.cct.service.api.VersionAutoEvolutionService;
 import com.cct.service.api.VersionService;
+import com.cct.util.AutoEvolutionUtils;
 import com.cct.util.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,9 @@ public class VersionServiceImpl implements VersionService {
         Optional<Version> version = versionRepository.findOneById(versionId);
 
         if (version.isPresent() && !isFullyFetched(version.get())) {
-            versionAutoEvolutionService.fetchData(version.get().getId());
+            versionAutoEvolutionService
+                    .getCommonVersions(version.get().getId())
+                    .forEach(this::updateFuelConsumption);
         }
 
         return version
@@ -103,5 +106,15 @@ public class VersionServiceImpl implements VersionService {
 
     private boolean isFullyFetched(Version v) {
         return v.getCityFuelConsumption() != null && v.getHighwayFuelConsumption() != null && v.getMixedFuelConsumption() != null;
+    }
+
+    private void updateFuelConsumption(VersionDTO versionDTO) {
+        Version version = versionRepository
+                .findOneById(AutoEvolutionUtils.encodeId(versionDTO.getId()))
+                .orElseThrow(() -> new BadRequestException(VERSION_NOT_FOUND));
+
+        version.setCityFuelConsumption(versionDTO.getCityFuelConsumption());
+        version.setHighwayFuelConsumption(versionDTO.getHighwayFuelConsumption());
+        version.setMixedFuelConsumption(versionDTO.getMixedFuelConsumption());
     }
 }

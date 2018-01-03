@@ -18,6 +18,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/versions")
 public class VersionController {
 
+    private static final String ORDER_BY_POPULARITY_PARAM = "orderByPopularity";
+
     private final VersionService versionService;
     private final RatingService ratingService;
 
@@ -38,7 +40,7 @@ public class VersionController {
             versions = versionService.getVersions(RequestParamsUtils.extractStringIdsFromParam(id));
         }
 
-        if ("orderByPopularity".equalsIgnoreCase(search)) {
+        if (ORDER_BY_POPULARITY_PARAM.equalsIgnoreCase(search)) {
             if (versions == null) {
                 versions = versionService.getVersionsOrderByPopularity();
             } else {
