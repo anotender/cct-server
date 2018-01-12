@@ -2,6 +2,7 @@ package com.cct.util;
 
 import com.cct.model.*;
 import com.cct.model.dto.*;
+import com.cct.model.dto.google.PlaceDTO;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -249,6 +250,18 @@ public final class ModelMapper {
         fuelPriceDTO.setPrice(fuelPrice.getPrice());
 
         return fuelPriceDTO;
+    }
+
+    public static FuelStationDTO convertToDTO(PlaceDTO placeDTO) {
+        FuelStationDTO fuelStationDTO = new FuelStationDTO();
+
+        fuelStationDTO.setId(placeDTO.getPlaceId());
+        fuelStationDTO.setAddress(placeDTO.getVicinity());
+        fuelStationDTO.setName(placeDTO.getName());
+        fuelStationDTO.setLatitude(placeDTO.getGeometryDTO().getLocationDTO().getLat());
+        fuelStationDTO.setLongitude(placeDTO.getGeometryDTO().getLocationDTO().getLng());
+
+        return fuelStationDTO;
     }
 
     private static Long convertLocalDateTimeToMillis(LocalDateTime date) {

@@ -2,8 +2,11 @@ package com.cct.service.impl;
 
 import com.cct.exception.BadRequestException;
 import com.cct.model.dto.FuelStationDTO;
+import com.cct.model.dto.google.PlaceDTO;
+import com.cct.model.dto.google.PlaceDetailsResponseDTO;
+import com.cct.model.dto.google.PlacesSearchResponseDTO;
 import com.cct.service.api.FuelStationGoogleService;
-import org.json.JSONObject;
+import com.cct.util.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,8 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.cct.exception.ErrorInfo.FUEL_STATION_NOT_FOUND;
@@ -46,7 +47,13 @@ public class FuelStationGoogleServiceImpl implements FuelStationGoogleService {
                 .queryParam("key", googleApiKey)
                 .build()
                 .toUri();
-        return getResults(uri);
+
+        return restTemplate
+                .getForObject(uri, PlacesSearchResponseDTO.class)
+                .getPlaceDTOs()
+                .stream()
+                .map(ModelMapper::convertToDTO)
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -56,35 +63,15 @@ public class FuelStationGoogleServiceImpl implements FuelStationGoogleService {
                 .queryParam("key", googleApiKey)
                 .build()
                 .toUri();
-        return getResult(uri).orElseThrow(() -> new BadRequestException(FUEL_STATION_NOT_FOUND));
-    }
 
-    private Collection<FuelStationDTO> getResults(URI uri) {
-        return new JSONObject(restTemplate.getForObject(uri, String.class))
-                .getJSONArray("results")
-                .toList()
-                .stream()
-                .filter(o -> o instanceof Map)
-                .map(this::mapToJSONObject)
-                .map(this::mapToFuelStation)
-                .collect(Collectors.toSet());
-    }
+        PlaceDTO placeDTO = restTemplate
+                .getForObject(uri, PlaceDetailsResponseDTO.class)
+                .getPlaceDTO();
 
-    private Optional<FuelStationDTO> getResult(URI uri) {
-        JSONObject result = new JSONObject(restTemplate.getForObject(uri, String.class)).getJSONObject("result");
-        return Optional.ofNullable(result).map(this::mapToFuelStation);
-    }
+        if (placeDTO == null) {
+            throw new BadRequestException(FUEL_STATION_NOT_FOUND);
+        }
 
-    private JSONObject mapToJSONObject(Object o) {
-        return new JSONObject((Map) o);
-    }
-
-    private FuelStationDTO mapToFuelStation(JSONObject o) {
-        String name = o.getString("name");
-        String address = o.getString("vicinity");
-        String id = o.getString("id");
-        Double latitude = o.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
-        Double longitude = o.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
-        return new FuelStationDTO(id, latitude, longitude, name, address);
+        return ModelMapper.convertToDTO(placeDTO);
     }
 }
