@@ -1,10 +1,12 @@
 package com.cct.model.dto.google;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"lat", "lng"})
 public class LocationDTO {
@@ -14,32 +16,7 @@ public class LocationDTO {
     @JsonProperty("lng")
     private Double lng;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    @JsonProperty("lat")
-    public Double getLat() {
-        return lat;
-    }
-
-    @JsonProperty("lat")
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    @JsonProperty("lng")
-    public Double getLng() {
-        return lng;
-    }
-
-    @JsonProperty("lng")
-    public void setLng(Double lng) {
-        this.lng = lng;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
